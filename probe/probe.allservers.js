@@ -1,6 +1,10 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
+// very simple script to spawn the probe.js script once for every server, 
+// an outdated script but left here for occassional use, could be much improved
+// from the coding perspective, but it works. I don't really use it anymore.
+
 ns.exec("probe.js", "home", 1,  "4sigma" )
 ns.exec("probe.js", "home", 1,  "aerocorp" )
 ns.exec("probe.js", "home", 1,  "aevum-police" )

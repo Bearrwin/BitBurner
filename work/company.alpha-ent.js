@@ -1,5 +1,6 @@
 /** @param {NS} ns */
 export async function main(ns) {
+	// Self-explanatory
 	ns.singularity.applyToCompany("Alpha Enterprises", "Software")
 	await ns.sleep(1000)
 	ns.singularity.workForCompany("Alpha Enterprises")

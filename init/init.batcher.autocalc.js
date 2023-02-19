@@ -20,7 +20,13 @@ export async function main(ns) {
 
 	ns.tail()
 
-
+	// This script is a largely unsuccessful attempt to setup an auto batcher using 
+	// ns.hackAnalyzeThreads with the first part of code designed as a server breaker
+	// to prep the server, it worked in a limited fashion.  It needs to be redone
+	// using the functions from formulas.exe once I work out how, because you can run
+	// those functions on a dummy server, so you can make assessments of threads needed
+	// based on a prepped server state, not a current server state. I have left it here
+	// mostly as a reference for when I get formulas.exe sorted out.
 
 	if (ns.getServerMoneyAvailable(target) < ns.getServerMaxMoney(target) * 0.4 || (ns.getServerSecurityLevel(target) > ns.getServerMinSecurityLevel(target) * 1.2)) {
 		ns.exec("cw1.js", (sName), nukeThreads, (target), 5000);

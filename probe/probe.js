@@ -2,6 +2,9 @@
 export async function main(ns) {
 	var target = ns.args[0]
 
+
+	// a very simple script to report the below stats to the log window
+	// allows the user to assess the server.
 	ns.tail()
 		
 	

@@ -12,10 +12,13 @@ function serverList(ns, current = "home", set = new Set()) {
 	return Array.from(set.keys())
 
 }
+// see init.batcher.ishackable.js this is a copy and past of the top part of that script
+// to allow you to generate a list of servers based on parameters you enter.
+
 
 export async function main(ns) {
 	let serverCount = 0
-		
+
 	const moneyMininput = await ns.prompt("Please enter the minimum money to accept on server (in $M) eg 3000 = 3b", { type: "text" });
 	const moneyMaxinput = await ns.prompt("Please enter the maximum money to accept on server (in $M) enter 10000000 (10,000,000) for all ", { type: "text" });
 
@@ -42,7 +45,7 @@ export async function main(ns) {
 		if (separator == 1) {
 			ns.tprint("---------------------------------------------------------------------------------------")
 		}
-		ns.tprint("I found " + serverCount + " servers that have between $" + moneyMininput / 1000 + "b and $" + moneyMaxinput / 1000 + "b" )
+		ns.tprint("I found " + serverCount + " servers that have between $" + moneyMininput / 1000 + "b and $" + moneyMaxinput / 1000 + "b")
 	}
 
 

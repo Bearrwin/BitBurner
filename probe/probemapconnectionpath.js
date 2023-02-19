@@ -1,3 +1,8 @@
+// This is not my script and I don't understand most of it, I don't remember where I found it.
+// whoever did write it, well done, it works well and I was able to modify it to automate 
+// installbackdoor function when calling it from another script.
+
+
 // This function produces a list of "gateway" servers for each server in serverNameList.
 // If we were to take the shortest path from home to any given server, the "gateway" server would be the last hop before reaching our target.
 // We only need to record the gateway server and not the rest of the path because the gateway server will then have its own entry in this list with its own gateway server,

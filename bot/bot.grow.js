@@ -7,6 +7,13 @@ export async function main(ns) {
 	var counterMax = ns.args[4];
 	var counter = 1
 
+	// this is a simple bot to launch the script "/ammo/cg1.single.js"
+	// it looks more complex than it is. There is a counter to change the
+	// variable as it launches each copy of the script so that it is not an actual copy
+	// of the process because it has a different "argument" to all the others
+	// otherwise it passes on argument provided from the initial batcher used to spawn this bot.
+	// ie /init/init.batcher.ishackable.js which is a much more complex script used to 
+	// set all of these arguments to make TheWoodchipper(tm) work.
 
 	while (true) {
 

@@ -25,8 +25,15 @@ export async function main(ns) {
 	let serverCount = 0
 	let noAccess = serverList(ns).filter(a => !ns.hasRootAccess(a));
 
+	// the purpose of this script is to crack any servers you are able to crack but haven't
+	// and report that to you and also the list of servers you can't yet crack.
 
 	// How many crack programs do we have?
+	// by using variables and increasing them like hasBrute++ turns that variable 
+	// from its starting number to a 1, which we use later to report what crack
+	// programs are available. At the same time increasing the total qty counter
+	// which is used later to assess suitable servers.
+
 	if (ns.fileExists("BruteSSH.exe", "home")) {
 		haveCrackQty++
 		hasBrute++
@@ -69,14 +76,25 @@ export async function main(ns) {
 	}
 	ns.tprint(" ")
 	ns.tprint(" ")
+	// noAccess variable is defined at the top as the entire server list but
+	// filtering to only keep ones that meet the condition of not having root access.
+	// we then filter that here by whether the number of ports required to nuke is 
+	// less than our CrackQty the filtered list becomes the crackable variable.
 
 	let crackable = noAccess.filter(a => (ns.getServerNumPortsRequired(a) <= haveCrackQty));
 
+	// we then take the sorted list stored in the crackable variable run the for loop functin
+	// which says for each entry(called the local variable "server") do all the actions
+	// in the for loop then change to the next entry and do those actions on it.
+	// here we are simply printing to the terminal the name of the server, and our text
+	// that it is crackable as user friendly information and then we are increasing
+	// a counter by 1 for each entry tin he list.
 
 	for (let server of crackable) {
 		ns.tprint(server + " Is crackable")
 		serverCount++
 	}
+	// if crackable was empty the counter would not increase, and this will kick in.
 	if (serverCount == 0) {
 		ns.tprint("Sorry master I could not find any more servers we can crack.")
 	} else {
@@ -84,7 +102,9 @@ export async function main(ns) {
 		ns.tprint("Master, Master!, I found " + serverCount + " servers we can crack!")
 	}
 
-
+	// here we act on the same list stored in crackable, but now we are using a "try"
+	// function which doesn't crash the script if you can't do the action, and with catch
+	// being empty it doesn't take any action on failure.
 	for (let server of crackable) {
 
 		try {
@@ -96,6 +116,10 @@ export async function main(ns) {
 			ns.nuke(server)
 		} catch { }
 
+
+		// we now report to the user that this server has been cracked and nuked
+		// (based on the numbers not actual success). or below in else if we could(and presumably did)
+		// crack it but our hacking skill is too low to hack it.
 		if (hackSkill < ns.getServerRequiredHackingLevel) {
 			ns.tprint(server + " Has been cracked and nuked " + ns.hasRootAccess(server))
 		} else {
@@ -104,6 +128,10 @@ export async function main(ns) {
 		}
 
 	}
+
+	// after having applied the above cracks and nuke we create a new list of servers and 
+	// filter it by what we don't have root access to and then using the for loop report 
+	// that to the user, along with how many ports that server requires to be opened.
 
 	let remainServ = serverList(ns).filter(a => !ns.hasRootAccess(a));
 

@@ -21,6 +21,10 @@ export async function main(ns) {
 	ns.run("/bot/bot.hacktarget.js")
 	await ns.sleep(1000)
 
+	ns.tprint("Sleep now!")
+	await ns.sleep(2000)
+	//  ns.singularity.installAugmentations("TheFatController.js")
+
 
 
 	

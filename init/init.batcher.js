@@ -15,6 +15,14 @@ export async function main(ns) {
 	var secBreakDelay = ns.getWeakenTime(dest)
 	var growdelay = ns.getWeakenTime(dest) - ns.getGrowTime(dest)
 
+	// This script is spawned from the "/init/init.batcher.ishackable.js" script for every
+	// server in your refined list of targets.
+	// the first section of this code has to do with "prepping" a server, ie reduce security
+	// to minimum and available money to maximum using a high thread count brute force
+	// weaken/grow/weaken cycle, grow increases security and bit grow increases it a lot so
+	// we fire off a second weakend timed to land after the grow which lands after the first weaken.
+	// when sufficiently overpowered you could probably get away with doing grow/weaken, skipping
+	// first grow due to brute force.
 
 	if (needSecBreaking == true) {
 
@@ -25,6 +33,17 @@ export async function main(ns) {
 		ns.exec("/ammo/cg1.single.js", (target), (growThreads) * 20, (dest), 1)
 		await ns.sleep(secBreakDelay + 30000)
 	}
+
+	// this then spawns the individual bots the 3 prongs of your attack, weaken, grow, and hack
+	// this is the woodchipper system, rather than trying to time the landing of the 
+	// wgh cycle, it works on the premise that you send out a constant stream of them all landing
+	// at approx the same time, for eg, every second one batch is sent, weaken might take 10 mins
+	// grow 8 mins and hack 2 mins, but after enough time, there is one of each landing every second
+	// despite the difference in travel times, below you will see sleep(hackdelay) so you can get the
+	// stream of slower threads in the air before you start your hacks which are much faster
+	// and can drain the money and max security before your w and g streams arrive, which is 
+	// not the best way to do it.  the rest of it is just understanding assigning and passing on
+	// variables. and using ns.exec to spawn scripts and its associated foibles.
 
 	ns.exec("/bot/bot.weak.js", (target), 1, (weakThreads), (target), (dest), (delayms), (counterMax), 1)
 
