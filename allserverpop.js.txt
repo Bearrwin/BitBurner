@@ -1,0 +1,33 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server1",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server2",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server3",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server4",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server5",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server6",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server7",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server8",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server9",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server10",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server11",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server12",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server13",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server14",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server15",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server16",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server17",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server18",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server19",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server20",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server21",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server22",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server23",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server24",)
+ns.exec("PurchasedServerPropagation.js", "home", 1, "Server25",)
+
+
+
+}

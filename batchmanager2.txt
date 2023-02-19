@@ -1,0 +1,20 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+
+
+
+
+	ns.exec("test2.js", "home", 1, "home", "ecorp", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "megacorp", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "blade", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "b-and-a", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "4sigma", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "clarkinc", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "kuai-gong", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "nwo", 50, 2400)
+	ns.exec("test2.js", "home", 1, "home", "omnitek", 50, 2400)
+	//ns.exec("test2.js", "home", 1, "home", "ecorp", 250, 2400)
+
+
+}

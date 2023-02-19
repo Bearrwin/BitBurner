@@ -1,0 +1,38 @@
+/** @param {NS} ns */
+export async function main(ns) {
+	var sName = ns.args[0];
+
+	ns.scp("w.js", (sName));
+	ns.scp("g.js", (sName));
+	ns.scp("h.js", (sName));
+	ns.scp("Kaboom.js", (sName));
+	ns.scp("Fluffer.js", (sName));
+	ns.scp("Scraper.js", (sName));
+	ns.scp("gentlescrape.js", (sName));
+	ns.scp("scorchedearth.js", (sName));
+	ns.scp("nukem.js", (sName));
+	ns.scp("justhack.js", (sName));
+	ns.scp("Froggy.js", (sName));
+	ns.scp("cg1.js", (sName));
+	ns.scp("ch1.js", (sName));
+	ns.scp("cw1.js", (sName));
+	ns.scp("growman.js", (sName));
+	ns.scp("growman2.js", (sName));
+	ns.scp("hackman.js", (sName));
+	ns.scp("hackman2.js", (sName));
+	ns.scp("hackmanager.js", (sName));
+	ns.scp("weakman.js", (sName));
+	ns.scp("weakman2.js", (sName));
+	ns.scp("wgh.js", (sName));
+	ns.scp("computek.js", (sName));
+	ns.scp("solo.home.small.js", (sName));
+	ns.scp("weakmanvar.js", (sName));
+	ns.scp("hackmanvar.js", (sName));
+	ns.scp("growmanvar.js", (sName));
+	ns.scp("weak.man.var.js", (sName));
+	ns.scp("hack.man.var.js", (sName));
+	ns.scp("grow.man.var.js", (sName));
+
+
+
+}

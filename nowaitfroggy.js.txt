@@ -1,0 +1,18 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+	// eg run nowaitfroggy.js home n00dles 
+
+	var sName = ns.args[0];
+	var target = ns.args[1];
+
+	ns.tail()
+
+
+
+
+	ns.exec("cw1.js", (sName), 10000, (target), 5000);
+	ns.exec("cg1.js", (sName), 10000, (target), 5000);
+	await ns.sleep(10000);
+	ns.exec("cw1.js", (sName), 10000, (target), 5001);
+}

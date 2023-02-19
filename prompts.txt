@@ -1,0 +1,28 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+
+// A Yes/No question. The default is to create a boolean dialog box.
+const queryB = "Is programming fun?";
+const resultB = await ns.prompt(queryB, { type: "boolean" });
+ns.tprint(`${queryB} ${resultB}`);
+
+// Another Yes/No question. Can also create a boolean dialog box by explicitly
+// passing the option {"type": "boolean"}.
+const queryA = "Do you enjoy Bitburner?";
+const resultA = await ns.prompt(queryA);
+ns.tprint(`${queryA} ${resultA}`);
+
+// Free-form text box.
+const resultC = await ns.prompt("Please enter your name.", { type: "text" });
+ns.tprint(`Hello, ${resultC}.`);
+
+
+// A drop-down list.
+const resultD = await ns.prompt("Please select your favorite fruit.", {
+    type: "select",
+    choices: ["Apple", "Banana", "Orange", "Pear", "Strawberry"]
+});
+ns.tprint(`Your favorite fruit is ${resultD.toLowerCase()}.`);
+
+}

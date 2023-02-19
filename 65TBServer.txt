@@ -1,0 +1,94 @@
+	/** @param {NS} ns */
+	export async function main(ns) {
+
+	var sName = ns.args[0];
+
+	ns.exec("/w.js", (sName), 24, "sigma-cosmetics");
+	ns.exec("/g.js", (sName), 240, "sigma-cosmetics");
+	ns.exec("/h.js", (sName), 28, "sigma-cosmetics");	
+
+	ns.exec("/w.js", (sName), 24, "joesguns");
+	ns.exec("/g.js", (sName), 240, "joesguns");
+	ns.exec("/h.js", (sName), 28, "joesguns");	
+	
+	ns.exec("/w.js", (sName), 24, "nectar-net");
+	ns.exec("/g.js", (sName), 240, "nectar-net");
+	ns.exec("/h.js", (sName), 28, "nectar-net");
+
+	ns.exec("/w.js", (sName), 24, "/hong-fang-tea");
+	ns.exec("/g.js", (sName), 240, "/hong-fang-tea");
+	ns.exec("/h.js", (sName), 28, "/hong-fang-tea");	
+	
+	ns.exec("/w.js", (sName), 24, "/harakiri-sushi");
+	ns.exec("/g.js", (sName), 240, "/harakiri-sushi");
+	ns.exec("/h.js", (sName), 28, "/harakiri-sushi");	
+
+	ns.exec("/w.js", (sName), 24, "neo-net");
+	ns.exec("/g.js", (sName), 240, "neo-net");
+	ns.exec("/h.js", (sName), 28, "neo-net");	
+
+	ns.exec("/w.js", (sName), 24, "zer0");
+	ns.exec("/g.js", (sName), 240, "zer0");
+	ns.exec("/h.js", (sName), 28, "zer0");		
+	
+	ns.exec("/w.js", (sName), 24, "max-hardware");
+	ns.exec("/g.js", (sName), 240, "max-hardware");
+	ns.exec("/h.js", (sName), 28, "max-hardware");	
+
+	ns.exec("/w.js", (sName), 24, "iron-gym");
+	ns.exec("/g.js", (sName), 240, "iron-gym");
+	ns.exec("/h.js", (sName), 28, "iron-gym");	
+	
+	ns.exec("/w.js", (sName), 120, "phantasy");
+	ns.exec("/g.js", (sName), 1200, "phantasy");
+	ns.exec("/h.js", (sName), 140, "phantasy");	
+
+	ns.exec("/w.js", (sName), 120, "silver-helix");
+	ns.exec("/g.js", (sName), 1200, "silver-helix");
+	ns.exec("/h.js", (sName), 140, "silver-helix");	
+
+	ns.exec("/w.js", (sName), 120, "crush-fitness");
+	ns.exec("/g.js", (sName), 1200, "crush-fitness");
+	ns.exec("/h.js", (sName), 140, "crush-fitness");	
+	
+	ns.exec("/w.js", (sName), 120, "omega-net");
+	ns.exec("/g.js", (sName), 1200, "omega-net");
+	ns.exec("/h.js", (sName), 140, "omega-net");	
+
+	ns.exec("/w.js", (sName), 120, "johnson-ortho");
+	ns.exec("/g.js", (sName), 1200, "johnson-ortho");
+	ns.exec("/h.js", (sName), 140, "johnson-ortho");	
+		
+	ns.exec("/w.js", (sName), 120, "the-hub");
+	ns.exec("/g.js", (sName), 1200, "the-hub");
+	ns.exec("/h.js", (sName), 140, "the-hub");	
+
+	ns.exec("/w.js", (sName), 240, "summit-uni");
+	ns.exec("/g.js", (sName), 2400, "summit-uni");
+	ns.exec("/h.js", (sName), 280, "summit-uni");	
+	
+	ns.exec("/w.js", (sName), 240, "rothman-uni");
+	ns.exec("/g.js", (sName), 2400, "rothman-uni");
+	ns.exec("/h.js", (sName), 280, "rothman-uni");	
+		
+	ns.exec("/w.js", (sName), 240, "computek");
+	ns.exec("/g.js", (sName), 2400, "computek");
+	ns.exec("/h.js", (sName), 280, "computek");	
+
+	ns.exec("/w.js", (sName), 240, "netlink");
+	ns.exec("/g.js", (sName), 2400, "netlink");
+	ns.exec("/h.js", (sName), 280, "netlink");	
+	
+	ns.exec("/w.js", (sName), 240, "catalyst");
+	ns.exec("/g.js", (sName), 2400, "catalyst");
+	ns.exec("/h.js", (sName), 280, "catalyst");	
+		
+	ns.exec("/w.js", (sName), 240, "syscore");
+	ns.exec("/g.js", (sName), 2400, "syscore");
+	ns.exec("/h.js", (sName), 280, "syscore");	
+
+	ns.exec("/w.js", (sName), 240, "zb-institute");
+	ns.exec("/g.js", (sName), 2400, "zb-institute");
+	ns.exec("/h.js", (sName), 280, "zb-institute");	
+	
+}

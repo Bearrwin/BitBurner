@@ -1,0 +1,17 @@
+export async function main(ns) {
+	var target = ns.args[0];
+	var dest = ns.args[1];
+
+//	ns.exec("Froggy.js", (target), 200000, (dest)) 
+	
+//	await ns.sleep(1200000)
+
+	ns.exec("weakman2.js", (target), 1, 24, (target), (dest), 1)
+	
+	ns.exec("growman2.js", (target), 1, 240, (target), (dest), 1)
+	
+	await ns.sleep(900000)
+	
+	ns.exec("hackman2.js", (target), 1, 30, (target), (dest), 1)
+
+}

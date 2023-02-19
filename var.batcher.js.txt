@@ -1,0 +1,24 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+	// eg run var.batcher.js home n00dles 1000 300000 12 120 15 900
+	                                                     
+	var target = ns.args[0];
+	var dest = ns.args[1];
+	var delayms = ns.args[2];
+	var hackdelayms = ns.args[3];
+	var weakThreads = ns.args[4];
+	var growThreads = ns.args[5];
+	var hackThreads = ns.args[6];
+	var counterMax = ns.args[7];
+
+
+	ns.exec("weak.man.var.js", (target), 1, (weakThreads), (target), (dest), (delayms), (counterMax), 1)
+	
+	ns.exec("grow.man.var.js", (target), 1, (growThreads), (target), (dest), (delayms), (counterMax), 1)
+	
+	await ns.sleep((hackdelayms))
+	
+	ns.exec("hack.man.var.js", (target), 1, (hackThreads), (target), (dest), (delayms), (counterMax), 1)
+
+}

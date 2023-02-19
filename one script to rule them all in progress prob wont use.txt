@@ -1,0 +1,82 @@
+/** @param {NS} ns */
+
+/**
+ * Returns an array of servers dynamically
+ */
+
+function serverList(ns, current = "home", set = new Set()) {
+	let connections = ns.scan(current)
+	let next = connections.filter(c => !set.has(c))
+	next.forEach(n => {
+		set.add(n);
+		return serverList(ns, n, set)
+	})
+	return Array.from(set.keys())
+
+}
+
+function threadCount(ns, hostname, scriptRam) {
+	let threads = 0;
+	let free_ram = ns.getServerMaxRam(hostname) - ns.getServerUsedRam(hostname)
+
+	threads = free_ram / scriptRam
+	return Math.floor(threads)
+}
+
+export async function main(ns) {
+	let servers = serverList(ns);
+	let target = ns.args[0];
+	let securityThresh = (ns.getServerMinSecurityLevel(target) + 1);
+	let moneyThresh = (ns.getServerMaxMoney(target) * 0.8);
+	ns.tail()
+	for (let server of servers) {
+		await ns.scp(["bin.wk.js", "bin.gr.js", "bin.hk.js"], server, "home")
+
+	}
+
+	while (true) {
+		for (let server of servers) {
+			if (ns.hasRootAccess(server)) {
+				// divert all the threads to the most valuable command
+				if (ns.getServerSecurityLevel(target) > securityThresh) {
+					// weaken while security > minsecurity
+					let available_threads = threadCount(ns, target, 1.75)
+					if (available_threads >= 1) {
+						ns.exec("bin.wk.js", server, available_threads, (target))
+					}
+				} else if (ns.getServerMoneyAvailable(target) < moneyThresh) {
+					// grow the target while money < money threshold
+					let available_threads = threadCount(ns, target, 1.75)
+					if (available_threads >= 1) {
+						ns.exec("bin.gr.js", server, available_threads, (target))
+					}
+				} else {
+					// hack the target
+					let available_threads = threadCount(ns, target, 1.7)
+					if (available_threads >= 1) {
+						ns.exec("bin.hk.js", server, available_threads, (target))
+					}
+				}
+
+
+			} else {
+				// open all possible ports and then attempt to nuke the server.
+				try {
+					ns.brutessh(server)
+					ns.ftpcrack(server)
+					ns.relaysmtp(server)
+					ns.httpworm(server)
+					ns.sqlinject(server)
+				} catch { }
+
+				try {
+					ns.nuke(server)
+				} catch { }
+
+			}
+			await ns.sleep(100)
+		}
+
+	}
+
+}

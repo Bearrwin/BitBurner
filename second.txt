@@ -1,0 +1,27 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+
+	ns.exec("wgh.js", "home", 25000, "phantasy")
+	ns.exec("wgh.js", "home", 25000, "silver-helix")
+	ns.exec("wgh.js", "home", 25000, "crush-fitness")
+	ns.exec("wgh.js", "home", 25000, "omega-net")
+	ns.exec("wgh.js", "home", 25000, "johnson-ortho")
+	ns.exec("wgh.js", "home", 25000, "the-hub")
+	ns.exec("wgh.js", "home", 25000, "summit-uni")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

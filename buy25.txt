@@ -1,0 +1,32 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+
+	ns.purchaseServer("Server1", 1048576);
+	ns.purchaseServer("Server2", 1048576);
+	ns.purchaseServer("Server3", 1048576);
+	ns.purchaseServer("Server4", 1048576);
+	ns.purchaseServer("Server5", 1048576);
+	ns.purchaseServer("Server6", 1048576);
+	ns.purchaseServer("Server7", 1048576);
+	ns.purchaseServer("Server8", 1048576);
+	ns.purchaseServer("Server9", 1048576);
+	ns.purchaseServer("Server10", 1048576);
+	ns.purchaseServer("Server11", 1048576);
+	ns.purchaseServer("Server12", 1048576);
+	ns.purchaseServer("Server13", 1048576);
+	ns.purchaseServer("Server14", 1048576);
+	ns.purchaseServer("Server15", 1048576);
+	ns.purchaseServer("Server16", 1048576);
+	ns.purchaseServer("Server17", 1048576);
+	ns.purchaseServer("Server18", 1048576);
+	ns.purchaseServer("Server19", 1048576);
+	ns.purchaseServer("Server20", 1048576);
+	ns.purchaseServer("Server21", 1048576);
+	ns.purchaseServer("Server22", 1048576);
+	ns.purchaseServer("Server23", 1048576);
+	ns.purchaseServer("Server24", 1048576);
+	ns.purchaseServer("Server25", 1048576);
+
+
+}

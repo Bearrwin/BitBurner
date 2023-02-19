@@ -1,0 +1,19 @@
+/** @param {NS} ns */
+export async function main(ns) {
+
+	ns.exec("basic.js", "home", 1,  "n00dles")
+	ns.exec("basic.js", "home", 1, "foodnstuff", 4)
+	ns.exec("basic.js", "home", 1, "sigma-cosmetics", 4,)
+	ns.exec("basic.js", "home", 1, "joesguns", 4,)
+	ns.exec("basic.js", "home", 1, "hong-fang-tea", 4,)
+	ns.exec("basic.js", "home", 1, "harakiri-sushi", 4,)
+	ns.exec("basic.js", "home", 1, "iron-gym", 8,)
+	ns.exec("basic.js", "home", 1, "nectar-net", 4,)
+	ns.exec("basic.js", "home", 1, "silver-helix", 16,)
+	ns.exec("basic.js", "home", 1, "neo-net", 8,)
+	ns.exec("basic.js", "home", 1, "phantasy", 8,)
+	ns.exec("basic.js", "home", 1, "omega-net", 8,)
+	ns.exec("basic.js", "home", 1, "zer0", 8,)
+	ns.exec("basic.js", "home", 1, "max-hardware", 8,)
+
+}

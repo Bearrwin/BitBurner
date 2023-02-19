@@ -1,0 +1,26 @@
+/** @param {NS} ns */
+export async function main(ns) {
+var target = ns.args[0];
+
+	ns.exec("weakman.js", "Server1", 1, 100, "Server1", "netlink")
+	ns.exec("weakman.js", "Server1", 1, 100, "Server1", "rothman-uni")
+	ns.exec("weakman.js", "Server1", 1, 100, "Server1", "summit-uni")
+	ns.exec("weakman.js", "Server1", 1, 100, "Server1", "the-hub")
+	ns.exec("weakman.js", "Server1", 1, 100, "Server1", "catalyst")
+
+	ns.exec("growman.js", "Server1", 1, 2400, "Server1", "netlink")
+	ns.exec("growman.js", "Server1", 1, 2400, "Server1", "rothman-uni")
+	ns.exec("growman.js", "Server1", 1, 2400, "Server1", "summit-uni")
+	ns.exec("growman.js", "Server1", 1, 2400, "Server1", "the-hub")
+	ns.exec("growman.js", "Server1", 1, 2400, "Server1", "catalyst")
+		
+	await ns.sleep(120000);
+	
+	ns.exec("hackman.js", "Server1", 1, 250, "Server1", "netlink")
+	ns.exec("hackman.js", "Server1", 1, 250, "Server1", "rothman-uni")
+	ns.exec("hackman.js", "Server1", 1, 250, "Server1", "summit-uni")
+	ns.exec("hackman.js", "Server1", 1, 250, "Server1", "the-hub")
+	ns.exec("hackman.js", "Server1", 1, 250, "Server1", "catalyst")
+
+
+}
