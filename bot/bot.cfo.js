@@ -20,8 +20,8 @@ export async function main(ns) {
 	 * 12. buy augments as per the list, pretty much increases to hacking, with preference to +skill
 	 * 
 	 */
-
-
+	ns.disableLog("sleep")
+	ns.disableLog("getServerMoneyAvailable")
 	// ns.tail()
 	let bruteBought = (ns.fileExists("BruteSSH.exe", "home"))
 	let ftpBought = (ns.fileExists("FTPCrack.exe", "home"))
@@ -39,34 +39,34 @@ export async function main(ns) {
 	let goalThreeServerSize = 64
 	let goalThreeServerName = "S"
 	// if the next variable is less than 3, it will cause problems
-	let goalThreeMaxservPurchCount = 6
+	let goalThreeMaxservPurchCount = 3
 	let goalThreeMoney = ns.getPurchasedServerCost(goalThreeServerSize)
 	let goalFour = false
 	let goalFourMoney = 11000000
 	let goalFive = false
 	let goalFiveServerSize = goalThreeServerSize * 2
-	let goalFiveMoney = Math.ceil((ns.getPurchasedServerCost(goalFiveServerSize) - ns.getPurchasedServerCost(goalThreeServerSize)) * 6.1)
+	let goalFiveMoney = Math.ceil((ns.getPurchasedServerCost(goalFiveServerSize) - ns.getPurchasedServerCost(goalThreeServerSize)) * goalThreeMaxservPurchCount)
 	let goalSix = false
 	let goalSixServerSize = goalFiveServerSize * 2
-	let goalSixMoney = Math.ceil((ns.getPurchasedServerCost(goalSixServerSize) - ns.getPurchasedServerCost(goalFiveServerSize)) * 6.1)
+	let goalSixMoney = Math.ceil((ns.getPurchasedServerCost(goalSixServerSize) - ns.getPurchasedServerCost(goalFiveServerSize)) * goalThreeMaxservPurchCount)
 	let goalSeven = false
 	let goalSevenServerSize = goalSixServerSize * 2
-	let goalSevenMoney = Math.ceil((ns.getPurchasedServerCost(goalSevenServerSize) - ns.getPurchasedServerCost(goalSixServerSize)) * 6.1)
+	let goalSevenMoney = Math.ceil((ns.getPurchasedServerCost(goalSevenServerSize) - ns.getPurchasedServerCost(goalSixServerSize)) * goalThreeMaxservPurchCount)
 	let goalEight = false
 	let goalEightServerSize = goalSevenServerSize * 2
-	let goalEightMoney = Math.ceil((ns.getPurchasedServerCost(goalEightServerSize) - ns.getPurchasedServerCost(goalSevenServerSize)) * 6.1)
+	let goalEightMoney = Math.ceil((ns.getPurchasedServerCost(goalEightServerSize) - ns.getPurchasedServerCost(goalSevenServerSize)) * goalThreeMaxservPurchCount)
 	let goalNine = false
 	let goalNineServerSize = goalEightServerSize * 2
-	let goalNineMoney = Math.ceil((ns.getPurchasedServerCost(goalNineServerSize) - ns.getPurchasedServerCost(goalEightServerSize)) * 6.1)
+	let goalNineMoney = Math.ceil((ns.getPurchasedServerCost(goalNineServerSize) - ns.getPurchasedServerCost(goalEightServerSize)) * goalThreeMaxservPurchCount)
 	let goalTen = false
 	let goalTenServerSize = 2048
 	let goalTenServerName = goalThreeServerName
 	// if the next variable is less than 3, it will cause problems this is due to autonaming system
 	// for servers and how I am referring to them in these algorithms
-	let goalTenMaxservPurchCount = 4 + goalThreeMaxservPurchCount
-	let goalTenMoney = ns.getPurchasedServerCost(goalTenServerSize * 4)
+	let goalTenMaxservPurchCount = 7 + goalThreeMaxservPurchCount
+	let goalTenMoney = ns.getPurchasedServerCost(goalTenServerSize * 2)
 	let goalEleven = false
-	let goalElevenMoney = 150000000
+	let goalElevenMoney = 550000000
 	let goalTwelve = false
 	let goalTwelveMoney = 15000000000
 
@@ -108,14 +108,15 @@ export async function main(ns) {
 			while (ns.getServerMoneyAvailable("home") < goalOneMoney && goalOne == false) {
 				await ns.sleep(5000)
 			}
-			ns.run("/utils/darkweb.auto.goalOne.js ")
+			ns.run("/utils/darkweb.auto.goalOne.js")
 			ns.tprint("Buying BruteSSH.exe and a Tor router from the darkweb.")
 		} else if (bruteBought == true) {
 			ns.tprint("You already own BruteSSH.exe")
 		}
-		ns.run("/bot/bot.hacknet.netburners.js")
-		ns.tprint("Starting hacknet bot to make sure our hacknet is running.")
+		// ns.run("/bot/bot.hacknet.netburners.js")
+		// ns.tprint("Starting hacknet bot to make sure our hacknet is running.")
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalOne = true
 	ns.tprint("Goal One is complete, moving to goal Two");
 	ns.tprint("");
@@ -137,6 +138,7 @@ export async function main(ns) {
 			ns.tprint("You already own FTPCrack.exe")
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalTwo = true
 	ns.tprint("Goal Two is complete, moving to goal three");
 	ns.tprint("");
@@ -169,9 +171,11 @@ export async function main(ns) {
 			}
 			ns.purchaseServer(goalThreeServerName, goalThreeServerSize)
 			ns.tprint("Buying a server of size " + goalThreeServerSize);
+			ns.write("/savedVar/newTarget.txt", "true", "w")
 			servPurchCount++
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalThree = true
 	ns.tprint("Goal Three is complete, moving to goal Four");
 	ns.tprint("");
@@ -194,6 +198,7 @@ export async function main(ns) {
 			await ns.sleep(2000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalFour = true
 	ns.tprint("Goal Four is complete, your home ram is at least 64Gb, moving to goal Five");
 	ns.tprint("");
@@ -221,6 +226,7 @@ export async function main(ns) {
 			await ns.sleep(5000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalFive = true
 	ns.tprint("Goal Five is complete, moving to goal Six");
 	ns.tprint("");
@@ -241,6 +247,7 @@ export async function main(ns) {
 			await ns.sleep(5000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalSix = true
 	ns.tprint("Goal Six is complete, moving to goal Seven");
 	ns.tprint("");
@@ -262,6 +269,7 @@ export async function main(ns) {
 			await ns.sleep(5000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalSeven = true
 	ns.tprint("Goal Seven is complete, moving to goal Eight");
 	ns.tprint("");
@@ -283,6 +291,7 @@ export async function main(ns) {
 			await ns.sleep(5000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalEight = true
 	ns.tprint("Goal Eight is complete, moving to goal Nine");
 	ns.tprint("");
@@ -304,6 +313,7 @@ export async function main(ns) {
 			await ns.sleep(5000)
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalNine = true
 	ns.tprint("Goal Nine is complete, moving to goal Ten");
 	ns.tprint("");
@@ -327,13 +337,14 @@ export async function main(ns) {
 			servPurchCount++
 		}
 	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalTen = true
 	ns.tprint("Goal Ten is complete, moving to goal Eleven");
 	ns.tprint("");
 
 
 	// goalEleven
-	if (ns.getServerMaxRam("home") < 256) {
+	if (ns.getServerMaxRam("home") < 512) {
 
 		if (goalEleven == false) {
 			ns.tprint("Saving up until I have " + `${ns.nFormat(goalElevenMoney, "$0.000a")} `);
@@ -345,79 +356,74 @@ export async function main(ns) {
 			await ns.sleep(5000)
 			ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
 
-			if (ns.getServerMaxRam("home") < 256) {
+			while (ns.getServerMaxRam("home") < 512) {
 				ns.run("/serv/serv.homeupg.auto.js")
 				await ns.sleep(5000)
 				ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
 
 			}
 		}
-	}
+	} ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalEleven = true
-	ns.tprint("Goal Eleven is complete, your home ram is at least 256Gb, moving to goal Twelve");
+	ns.tprint("Goal Eleven is complete, your home ram is at least 512Gb, moving to goal Twelve");
 
 
-
+	var niteSecDone = ns.read("/savedVar/niteSecDone.txt") === "true" ? true : false;
 	// goalTwelve
 	// This simply waits until you have $15b then using subscript to save on RAM
 	// buys the augments listed below from their relevant factions. Price etc 
 	// all calculated manually for now.
-	// if (goalTwelve == false) {
-	ns.tprint("Saving up until I have " + `${ns.nFormat(goalTwelveMoney, "$0.000a")} `);
-	ns.tprint("");
-	// while (ns.getServerMoneyAvailable("home") < goalTwelveMoney && goalTwelve == false) {
-	// 	await ns.sleep(5000)
-	// }
-	ns.tprint("Buying augments if we don't already have them.")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neural-Retention Enhancement")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Embedded Netburner Module")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen I")
-	ns.run("/utils/faction.buy.augment.js", 1, "Sector-12", "CashRoot Starter Kit")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen II")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Artificial Synaptic Potentiation")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neurotrainer II")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "BitWire")
-	ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Synaptic Enhancement Implant")
-	ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Neurotrainer I")
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
-	await ns.sleep(5000)
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
-	await ns.sleep(5000)
-	ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+	if (goalTwelve == false) {
+		ns.tprint("Saving up until I have " + `${ns.nFormat(goalTwelveMoney, "$0.000a")} `);
+		ns.tprint("");
+		while (ns.getServerMoneyAvailable("home") < goalTwelveMoney && goalTwelve == false) {
+			await ns.sleep(5000)
+		}
+
+		if (niteSecDone == false) {
+			ns.tprint("Waiting on NiteSec rep to purchase augments")
+			while (niteSecDone == false) {
+				niteSecDone = ns.read("/savedVar/niteSecDone.txt") === "true" ? true : false;
+				await ns.sleep(30000)
+			}
+		}
+
+		ns.tprint("Buying augments if we don't already have them.")
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neural-Retention Enhancement")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Embedded Netburner Module")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen I")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "Sector-12", "CashRoot Starter Kit")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen II")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Artificial Synaptic Potentiation")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neurotrainer II")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "BitWire")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Synaptic Enhancement Implant")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Neurotrainer I")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+		await ns.sleep(5000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+		await ns.sleep(5000)
+		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
 
 
 
 
 
-	// } 
+		} 
 
-	goalTwelve = true
-	ns.tprint("Goal Twelve is complete, moving to goal Thirteen");
-	ns.tprint("");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
+		goalTwelve = true
+		ns.tprint("Goal Twelve is complete, moving to goal Thirteen");
+		ns.tprint("");
 
 
 
@@ -435,65 +441,7 @@ export async function main(ns) {
 
 
 
-// 	while (true) {
 
 
 
-
-// 		if (!ns.fileExists("BruteSSH.exe", "home")) {
-// 			while (ns.getServerMoneyAvailable("home") < 2000000) {
-// 				await ns.sleep(1000)
-// 			}
-// 			ns.run("darkweb.auto.js", 1)
-// 			await ns.sleep(10000)
-// 			ns.run("worm.nuke.js")
-
-// 		}
-
-
-// 		while (ns.getServerMoneyAvailable("home") < 2000000) {
-// 			await ns.sleep(1000)
-// 		}
-// 		ns.run("darkweb.auto.js", 1)
-// 		await ns.sleep(10000)
-// 		ns.run("worm.nuke.js")
-
-// 		while (ns.getServerMoneyAvailable("home") < 5500000) {
-// 			await ns.sleep(1000)
-// 		}
-// 		ns.run("darkweb.auto.js", 1)
-// 		await ns.sleep(10000)
-// 		ns.run("worm.nuke.js")
-
-// 		while (ns.getServerMoneyAvailable("home") < 35000000) {
-// 			await ns.sleep(1000)
-// 		}
-// 		ns.run("darkweb.auto.js", 1)
-// 		await ns.sleep(10000)
-// 		ns.run("worm.nuke.js")
-
-// 		while (ns.getServerMoneyAvailable("home") < 265000000) {
-// 			await ns.sleep(1000)
-// 		}
-// 		ns.run("darkweb.auto.js", 1)
-// 		await ns.sleep(10000)
-// 		ns.run("worm.nuke.js")
-
-// 	}
-// }
-// if (!ns.fileExists("BruteSSH.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("BruteSSH.exe")) {
-// 	ns.singularity.purchaseProgram("BruteSSH.exe");
-// }
-// if (!ns.fileExists("FTPCrack.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("FTPCrack.exe")) {
-// 	ns.singularity.purchaseProgram("FTPCrack.exe");
-// }
-// if (!ns.fileExists("HTTPWorm.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("relaySMTP.exe")) {
-// 	ns.singularity.purchaseProgram("relaySMTP.exe");
-// }
-// if (!ns.fileExists("relaySMTP.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("HTTPWorm.exe")) {
-// 	ns.singularity.purchaseProgram("HTTPWorm.exe");
-// }
-// if (!ns.fileExists("SQLInject.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("SQLInject.exe")) {
-// 	ns.singularity.purchaseProgram("SQLInject.exe")
-
-// }
+	}

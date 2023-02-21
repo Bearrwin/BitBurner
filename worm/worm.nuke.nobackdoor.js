@@ -44,23 +44,23 @@ export async function main(ns) {
 
 
     }
-    // ns.tprint(serverCounter)
-    await ns.sleep(50)
-    if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("CSEC") && ns.hasRootAccess("CSEC")) {
-        await ns.exec("/utils/backdoor.js", "home", 1, "CSEC")
-        await ns.sleep(15000)
-    }
-
-    if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("avmnite-02h") && ns.hasRootAccess("avmnite-02h")) {
-        await ns.exec("/utils/backdoor.js", "home", 1, "avmnite-02h")
-        await ns.sleep(15000)
-    }
-    if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("I.I.I.I") && ns.hasRootAccess("I.I.I.I")) {
-        await ns.exec("/utils/backdoor.js", "home", 1, "I.I.I.I")
-        await ns.sleep(15000)
-    }
-    if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("run4theh111z") && ns.hasRootAccess("run4theh111z")) {
-        await ns.exec("/utils/backdoor.js", "home", 1, "run4theh111z")
-        await ns.sleep(15000)
-    }
 }
+    // ns.tprint(serverCounter)
+    // await ns.sleep(50)
+    // if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("CSEC") && ns.hasRootAccess("CSEC")) {
+    //     await ns.exec("/utils/backdoor.js", "home", 1, "CSEC")
+    //     await ns.sleep(15000)
+    // }
+
+    // if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("avmnite-02h") && ns.hasRootAccess("avmnite-02h")) {
+    //     await ns.exec("/utils/backdoor.js", "home", 1, "avmnite-02h")
+    //     await ns.sleep(15000)
+    // }
+    // if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("I.I.I.I") && ns.hasRootAccess("I.I.I.I")) {
+    //     await ns.exec("/utils/backdoor.js", "home", 1, "I.I.I.I")
+    //     await ns.sleep(15000)
+    // }
+    // if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel("run4theh111z") && ns.hasRootAccess("run4theh111z")) {
+    //     await ns.exec("/utils/backdoor.js", "home", 1, "run4theh111z")
+    //     await ns.sleep(15000)
+    // }
