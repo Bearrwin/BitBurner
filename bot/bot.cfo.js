@@ -507,35 +507,39 @@ export async function main(ns) {
 			}
 		}
 
-		ns.tprint("Buying augments if we don't already have them.")
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neural-Retention Enhancement")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Embedded Netburner Module")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen I")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "Sector-12", "CashRoot Starter Kit")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen II")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Artificial Synaptic Potentiation")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neurotrainer II")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "BitWire")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Synaptic Enhancement Implant")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Neurotrainer I")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+		if (ns.singularity.getFactionRep("CyberSec") > 2000 && ns.singularity.getFactionRep("Sector-12") > 12500 && ns.singularity.getFactionRep("NiteSec") > 20000) {
+			ns.tprint("Buying augments if we don't already have them.")
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neural-Retention Enhancement")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Embedded Netburner Module")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen I")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "Sector-12", "CashRoot Starter Kit")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen II")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Artificial Synaptic Potentiation")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Neurotrainer II")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "BitWire")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Synaptic Enhancement Implant")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "CyberSec", "Neurotrainer I")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
+			
+			ns.tprint("Faction check met")
+		} else {
 
-
-
+			ns.tprint("Faction check not met")
+		}
 
 
 	}

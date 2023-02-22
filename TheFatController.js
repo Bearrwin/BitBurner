@@ -27,7 +27,8 @@ export async function main(ns) {
 
 	ns.tprint("Sleep now!")
 	await ns.sleep(2000)
-	//  ns.singularity.installAugmentations("TheFatController.js")
+	ns.run("/bot/sleepNow.js")
+	// ns.singularity.installAugmentations("TheFatController.js")
 
 
 
