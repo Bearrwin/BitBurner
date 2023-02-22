@@ -23,13 +23,62 @@ export async function main(ns) {
 	ns.disableLog("sleep")
 	ns.disableLog("getServerMoneyAvailable")
 	// ns.tail()
+
+	// Start by updating saved variables that we will need using subscripts 
+	// to save ongoing RAM usage.  Most singularity actions are very expensive
+	// first time through Bn4.1 so we need to split off as many as we can subscripts
+	// that don't loop so they use the ram they need and then release it.
+	// We therefore write to files in the savedVar folder one file per variable that we need
+	// to pass between scripts so that we can assess the variable state in the script
+	// you can write "strings" (a series of characters, that is treated as such)
+	// a number which can be read into a variable and will actually be used
+	// as a number, but not a boolean (true/false), but if you write a string
+	// "true" you can then read it into a variable and in the process ask is the
+	// contents of what is being read and placed into that variable the string "true"
+	// the answer to that question is a boolean (true/false), allowing you to effectively
+	// pass booleans between scripts which is very useful.
+
+	// We need to make sure our variable will read in, up to date information,
+	// so we run the script that uses RAM expensive actions and will update our
+	// savedVar file which stores a count of purchased servers that we own and shortly
+	// we declare var servCount = ns.read("/savedVar/purchServCount.txt") which will then
+	// give us a usable variable to allow us to cheaply perform a check to make sure we
+	// are not buying more servers than we have set as our limit.
+	ns.run("/utils/isexists.purchServ.js")
+	await ns.sleep(1000)
+
+	// Set various variables needed for this script
+	// This block of variables will be used to determine whether to buy the 
+	// various files from the black market via the TOR router/
+
+	//**********************************
+	// VERY important, how to use the var/let/const method of declaring a variable
+
+	// var is a variable that can be seen throughout this entire script no matter where 
+	// it is declared, and you can re-declare it later using var myVariable = value
+	// the same way you did first time.
+
+	// let can only be seen within the "block" in which it is declared, so if it is 
+	// declared at the top most tier, ie not inside an if statement or for/while loop
+	// then any later statements/loops etc can see this variable.
+	// But if you declare it inside a loop or if statement then only that loop/statement
+	// and it is substatements/loops can see it. Also very important to note that you cannot
+	// re-declare a variable declared with let, you can update it, which you do by doing
+	// exactly what you do to declare that variable, except remove the let from the beginning.
+
+	// const works exactly the same as let with one important exception, once declared
+	// it CANNOT be updated.
+
 	let bruteBought = (ns.fileExists("BruteSSH.exe", "home"))
 	let ftpBought = (ns.fileExists("FTPCrack.exe", "home"))
 	let smtpBought = (ns.fileExists("relaySMTP.exe", "home"))
 	let httpBought = (ns.fileExists("HTTPWorm.exe", "home"))
 	let sqlBought = (!ns.fileExists("SQLInject.exe", "home"))
-	// let number_of_nodes = ns.hacknet.numNodes()
-	let servPurchCount = 0
+	var purchServCount = ns.read("/savedVar/purchServCount.txt")
+
+
+	// These variables will allow us to control what we buy and when,
+	// the logic of which can be seen in the individual goals below.
 
 	let goalOne = false
 	let goalOneMoney = 800000
@@ -38,7 +87,6 @@ export async function main(ns) {
 	let goalThree = false
 	let goalThreeServerSize = 64
 	let goalThreeServerName = "S"
-	// if the next variable is less than 3, it will cause problems
 	let goalThreeMaxservPurchCount = 3
 	let goalThreeMoney = ns.getPurchasedServerCost(goalThreeServerSize)
 	let goalFour = false
@@ -64,23 +112,63 @@ export async function main(ns) {
 	// if the next variable is less than 3, it will cause problems this is due to autonaming system
 	// for servers and how I am referring to them in these algorithms
 	let goalTenMaxservPurchCount = 7 + goalThreeMaxservPurchCount
-	let goalTenMoney = ns.getPurchasedServerCost(goalTenServerSize * 2)
+	let goalTenMoney = ns.getPurchasedServerCost(goalTenServerSize)
 	let goalEleven = false
 	let goalElevenMoney = 550000000
 	let goalTwelve = false
 	let goalTwelveMoney = 15000000000
 
-	// this creates a list in variable purchServers of all the purchased servers you own.
-	let purchServers = ns.getPurchasedServers();
+	// The above block initialises all our variables, now we will go through and update them.
+	// When you declare or update a variable use a single = when you evaluate if a variable is 
+	// equal to something use a double == Below you can see we are checking with our if statement
+	// is bruteBought true, so we use == but when update the variable goalOne we use a single =
+	// very easy to get mixed up until you get it used it. I spent a long time tracking down
+	// errors caused by that.
 
-	// if this script is restarted for any reason the variable which keeps track of how many servers
-	// you have bought starts at 0 again, so this stops you overbuying servers.
-	for (let server of purchServers) {
-		servPurchCount++
-		ns.tprint(server + " " + servPurchCount)
+	// It occurs to me as I am writing this that some of this is redundant, I will go through
+	// on another pass and try to remove that redundancy, but it has been a PITA to debug
+	// so for now leaving in the redundancy in the interests of making it work.
 
+	if (bruteBought == true && ns.hasTorRouter()) {
+		goalOne = true
 	}
-	await ns.sleep(1000)
+	if (ftpBought == true) {
+		goalTwo = true
+	}
+	if (purchServCount >= goalThreeMaxservPurchCount) {
+		goalThree = true
+	}
+	if (ns.getServerMaxRam("home") >= 64) {
+		goalFour = true
+	}
+	if (purchServCount > 0) {
+
+		if (ns.getServerMaxRam(goalThreeServerName) >= goalFiveServerSize) {
+			goalFive = true
+		}
+		if (ns.getServerMaxRam(goalThreeServerName) >= goalSixServerSize) {
+			goalSix = true
+		}
+		if (ns.getServerMaxRam(goalThreeServerName) >= goalSevenServerSize) {
+			goalSeven = true
+		}
+		if (ns.getServerMaxRam(goalThreeServerName) >= goalEightServerSize) {
+			goalEight = true
+		}
+		if (ns.getServerMaxRam(goalThreeServerName) >= goalNineServerSize) {
+			goalNine = true
+		}
+	}
+
+	if (purchServCount >= goalTenMaxservPurchCount) {
+		goalTen = true
+	}
+	if (ns.getServerMaxRam("home") >= 512) {
+		goalEleven = true
+	}
+
+
+
 
 	// If you have Sector-12-CashRoot Starter Kit aug, you get $1m starting cash/BruteSSH.exe
 	// When you have more than 800k run darkweb auto which will buy tor router for 200k 
@@ -90,34 +178,41 @@ export async function main(ns) {
 
 
 	// goalOne
-	// check variable to see if we own BruteSSH.exe yet (|| which is shift+\) says OR we don't 
-	// own TOR router ! reverses the check from true to false for this condition
-	// so if we are missing either of these proceed into the IF statement otherwise skip it
-	// once we are in the IF enter the WHILE loop which checks if we have enough money for our goal
-	// and makes sure we haven't finished this goal, waits 5 secs and then checks again.
-	// when we have met our conditions proceed past the while loop, run the script that buys the 
-	// TOR router and BruteSSH.exe, then print a msg to terminal so we know it has worked.
-	// also in this goal is to the start the hacknet bot, which will buy 8 nodes and 60 levels
-	// on each, which is more than enough to open up the netburners faction and get you a trickle 
-	// income which will pay back your investment in about 2 hours, much more than that and it rapidly
-	// escalates how long it takes to pay back your cost of buying the network.
+	// && = AND 
+	// || = OR 
+	// Putting a ! before something like !ns.hasTorRouter() means the condition evaluates
+	// as oppsosite, so !ns.hasTorRouter() is true if we do NOT have a TOR router.
+
+	// Do we own BruteSSH.exe (read into bruteBought variable in variable block at top)
+	// perform a second check, OR do we not own a TOR router, if either of these conditions is true
+	// then we can proceed INTO the if statement, but if we have a TOR router and BruteSSH.exe
+	// everything inside the {} relating to that if statement will be skipped.
 	if (bruteBought == false || !ns.hasTorRouter()) {
+		// check that we have not marked this goals as complete, if we have skip to next goal
 		if (goalOne == false) {
 			ns.tprint("Saving up until I have " + `${ns.nFormat(goalOneMoney, "$0.000a")} `);
 			ns.tprint("");
+			// create a wait state until we meet our requirements for this goal, which is having
+			// enough money, when that is met, and as long as goalOne hasn't been marked complete,
+			// proceed, which will trigger the "utils/darkweb.auto.goalOne.js" script
+			// which will buy a TOR router and BruteSSH.exe.
 			while (ns.getServerMoneyAvailable("home") < goalOneMoney && goalOne == false) {
 				await ns.sleep(5000)
 			}
 			ns.run("/utils/darkweb.auto.goalOne.js")
+			// Prints to terminal, to print to log use ns.print instead of ns.tprint.
 			ns.tprint("Buying BruteSSH.exe and a Tor router from the darkweb.")
 		} else if (bruteBought == true) {
 			ns.tprint("You already own BruteSSH.exe")
 		}
-		// ns.run("/bot/bot.hacknet.netburners.js")
-		// ns.tprint("Starting hacknet bot to make sure our hacknet is running.")
 	}
+	// Write a variable to be read by the bot.hacktarget.js script which is "listening"
+	// by reading from "/savedVar/newTarget.txt" in a 5 sec loop while it still reads as "false"
+	// By writing to that file from this script, we are in effect telling our targeting 
+	// script to start another target evaluation run also to re-launch
+	// the scripts that deploy the actual hacking scripts.  Everytime we buy a new server
+	// or upgrade its ram, we will write to this savedVar to trigger that re-evaluation.
 	ns.write("/savedVar/newTarget.txt", "true", "w")
-	goalOne = true
 	ns.tprint("Goal One is complete, moving to goal Two");
 	ns.tprint("");
 
@@ -125,10 +220,19 @@ export async function main(ns) {
 	// goalTwo
 	// Waits until you have enough money to buy FTPCrack.exe from the darkweb using the TOR router 
 	// you bought in goalOne, with appropriate checks in case you have it. Same basic idea as goalOne.
+
+	// check if you own FTPCrack.exe by looking at the state of the variable we declared at
+	// the beginning.
 	if (ftpBought == false) {
 		if (goalTwo == false) {
 			ns.tprint("Saving up until I have " + `${ns.nFormat(goalTwoMoney, "$0.000a")} `);
 			ns.tprint("");
+			// same as goalOne, establish a "wait state" by having a timed while loop
+			// which we will exit when the conditions of the while are no longer met
+			// so in this example when our money(measured by getting available money) on
+			// our "home" server is greater than the amount in the variable goalTwoMoney
+			// then as long as goalTwo is not set to true we will proceed and trigger
+			// the darkweb.auto.goalTwo script which will buy FTPcrack.exe for us.
 			while (ns.getServerMoneyAvailable("home") < goalTwoMoney && goalTwo == false) {
 				await ns.sleep(5000)
 			}
@@ -145,34 +249,37 @@ export async function main(ns) {
 
 
 	// goalThree
-	// This goal buy purchased servers, which are a different price for each level of RAM
-	// and different prices in different BitNodes.
-	// First check if you already own six purchased servers(the object of this goal) the autonaming
-	// function I am allowing the game to apply by repeatedly buying a server with the same basic
-	// name means it starts at S then become S-0 then S-1 up to max of s-23. So S-4 is my sixth
-	// server so that is what I check for in the list of servers created in the first IF
-	// statement, does it include the name S-4, but it uses variables so that if you change the
-	// name of your server or the amount you are buying, it will adjust accordingly.
-	// it utilises a while loop to purchase 1 server when it has enough money and then 
-	// increases the variable servPurchCount by 1 each time so that once we have the number
-	// specified in the variables up the top it will exit the while loop and then continue
-	// going down the script
+	// This goal is to  buy purchased servers, which are a different price for each
+	// level of RAM and different prices in different BitNodes.
 
-	if (ns.getPurchasedServers().includes(goalThreeServerName + "-" + (servPurchCount - 2))) {
-		ns.tprint("You already have at least " + servPurchCount + " servers.")
+	// check to see if we already own more servers than this goal is set to buy if we do, then
+	// skip this entire goal's code.
+	if (purchServCount >= goalThreeMaxservPurchCount) {
+		ns.tprint("You already have " + purchServCount + " servers.")
 		goalThree = true
 	}
 	if (goalThree == false) {
-		while (servPurchCount < goalThreeMaxservPurchCount) {
+		// check to see if we already own more servers than this goal is set to buy
+		// if we don't then proceed and enter the while loop. Note this goal has
+		// one while loop inside another. We want to keep buying servers unti
+		// we have enough but we want to buy them one at a time.
+		// So that each time we expand our abilities we start using them.
+
+		while (purchServCount < goalThreeMaxservPurchCount) {
 			ns.tprint("Saving up until I have " + `${ns.nFormat(goalThreeMoney, "$0.000a")} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < goalThreeMoney && goalThree == false) {
 				await ns.sleep(5000)
 			}
-			ns.purchaseServer(goalThreeServerName, goalThreeServerSize)
+			// run the script to buy a server, using subscript to save ongoing RAM usage.
+			ns.run("/serv/serv.buy.js", 1, goalThreeServerName, goalThreeServerSize)
 			ns.tprint("Buying a server of size " + goalThreeServerSize);
+			// update the newTarget savedVar to trigger a target re-evaluation
 			ns.write("/savedVar/newTarget.txt", "true", "w")
-			servPurchCount++
+			// using a subscript, re-count our purchased servers and update the savedVar for that
+			ns.run("/utils/isexists.purchServ.js")
+			await ns.sleep(1000)
+			purchServCount = ns.read("/savedVar/purchServCount.txt")
 		}
 	}
 	ns.write("/savedVar/newTarget.txt", "true", "w")
@@ -183,7 +290,7 @@ export async function main(ns) {
 
 	// goalFour
 
-	// This upgrds your home RAM if it is less than 64Gb, using a subscript to do so to save on
+	// This upgrdes your home RAM if it is less than 64Gb, using a subscript to do so to save on
 	// ongoing RAM cost of this script.
 	if (ns.getServerMaxRam("home") < 64) {
 
@@ -222,7 +329,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalFiveServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam("S"));
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -243,7 +350,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalSixServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam("S"));
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -265,7 +372,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalSevenServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam("S"));
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -287,7 +394,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalEightServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam("S"));
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -309,7 +416,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalNineServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam("S"));
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -319,22 +426,32 @@ export async function main(ns) {
 	ns.tprint("");
 
 
+
+
 	// goalTen
 	// see goalThree for explanation.
-	if (ns.getPurchasedServers().includes(goalTenServerName + "-" + (goalTenMaxservPurchCount - 2))) {
-		ns.tprint("You already have at least " + goalTenMaxservPurchCount + " servers.")
+	ns.run("/utils/isexists.purchServ.js")
+	await ns.sleep(1000)
+	purchServCount = ns.read("/savedVar/purchServCount.txt")
+	if (purchServCount >= goalTenMaxservPurchCount) {
+		ns.tprint("You already have " + purchServCount + " servers.")
 		goalTen = true
 	}
 	if (goalTen == false) {
-		while (servPurchCount < goalTenMaxservPurchCount) {
+		while (purchServCount < goalTenMaxservPurchCount) {
+			ns.tprint("We have " + purchServCount + " / " + goalTenMaxservPurchCount);
 			ns.tprint("Saving up until I have " + `${ns.nFormat(goalTenMoney, "$0.000a")} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < goalTenMoney && goalTen == false) {
 				await ns.sleep(5000)
 			}
-			ns.purchaseServer(goalTenServerName, goalTenServerSize)
+			ns.run("/serv/serv.buy.js", 1, goalTenServerName, goalTenServerSize)
 			ns.tprint("Buying a server of size " + goalTenServerSize);
-			servPurchCount++
+			ns.write("/savedVar/newTarget.txt", "true", "w")
+			ns.run("/utils/isexists.purchServ.js")
+			await ns.sleep(1000)
+			purchServCount = ns.read("/savedVar/purchServCount.txt")
+
 		}
 	}
 	ns.write("/savedVar/newTarget.txt", "true", "w")
@@ -362,8 +479,10 @@ export async function main(ns) {
 				ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
 
 			}
+			ns.run("/utils/darkweb.auto.js")
 		}
-	} ns.write("/savedVar/newTarget.txt", "true", "w")
+	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalEleven = true
 	ns.tprint("Goal Eleven is complete, your home ram is at least 512Gb, moving to goal Twelve");
 
@@ -419,29 +538,30 @@ export async function main(ns) {
 
 
 
-		} 
-
-		goalTwelve = true
-		ns.tprint("Goal Twelve is complete, moving to goal Thirteen");
-		ns.tprint("");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
+
+	goalTwelve = true
+	ns.tprint("Goal Twelve is complete, time to install augments");
+	ns.tprint("");
+	ns.write("/savedVar/StageOnePhaseOneComplete.txt", "true", "w")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

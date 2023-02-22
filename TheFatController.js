@@ -7,16 +7,16 @@ export async function main(ns) {
 	ns.run("/bot/bot.cfo.js")
 	ns.tprint("I made you the CFO now get to work!")
 
-	await ns.sleep(60000)
+	await ns.sleep(1000)
 
 	// Start timer script
-	// ns.run("/bot/bot.timer.5mins.js")
+	ns.run("/bot/bot.timer.5mins.js")
 	ns.tprint("* Fires starter pistol and shouts 'MINIONS GO!'")
 	// Start bot to manage jobs and later sleeves
 	ns.run("/bot/bot.minions.js")
 
 
-	await ns.sleep(60000)
+	await ns.sleep(15000)
 
 
 

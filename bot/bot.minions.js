@@ -2,12 +2,25 @@
 export async function main(ns) {
 	ns.disableLog("sleep")
 	ns.tail()
+	var playerFaction = ns.getPlayer().factions
+	// lets check if our saved variables are accurate before we read them.
+	// This accounts for saved variables being imported from another game
+	// and messing up this script.
+	if (!playerFaction.includes("CyberSec")) {
+		ns.write("/savedVar/csecDone.txt", "false", "w")
+	}
+	if (!playerFaction.includes("Sector-12")) {
+		ns.write("/savedVar/stwelveDone.txt", "false", "w")
+	}
+	if (!playerFaction.includes("NiteSec")) {
+		ns.write("/savedVar/niteSecDone.txt", "false", "w")
+	}
 	var stageOne = ns.read("/savedVar/stageOne.txt") === "true" ? true : false;
 	var csecDone = ns.read("/savedVar/csecDone.txt") === "true" ? true : false;
 	var stwelveDone = ns.read("/savedVar/stwelveDone.txt") === "true" ? true : false;
 	var niteSecDone = ns.read("/savedVar/niteSecDone.txt") === "true" ? true : false;
 	var invite = ns.singularity.checkFactionInvitations()
-	var playerFaction = ns.getPlayer().factions
+
 	ns.tprint(playerFaction)
 	ns.print(playerFaction)
 
@@ -33,6 +46,12 @@ export async function main(ns) {
 		// when we do have an invitation run script to accept invite and work for them
 		// these actions are RAM hogs so we have split off some actions until 
 		// Source file 4.3 is available.
+
+		// ***** NB First time around in a new bitnode you won't have BruteSSH.exe
+		// for some time after your hacking skill gets to the level you can backdoor
+		// CSEC and trigger this next stage.  I keep asking myself, why hasn't CyberSec
+		// kicked in yet.  Need to reach 800k and buy TOR/Brute before you get 
+		// CashRoot Starter Kit from Sector-12 in first aug cycle.
 
 		if (csecDone == false) {
 			invite = ns.singularity.checkFactionInvitations()

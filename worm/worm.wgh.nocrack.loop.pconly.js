@@ -28,6 +28,7 @@ export async function main(ns) {
         let available_threads = threadCount(ns, server, 2.4)
         if (available_threads >= 1) {
             ns.exec("/loop/combo.wgh.nocrack.loop.js", server, available_threads, (target))
+            await ns.sleep(10000)
         }
     }
 
@@ -35,5 +36,5 @@ export async function main(ns) {
 
 
     await ns.sleep(1000)
-    
+
 }

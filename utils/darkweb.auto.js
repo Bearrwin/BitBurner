@@ -19,21 +19,22 @@ export async function main(ns) {
 	if (!ns.fileExists("relaySMTP.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("HTTPWorm.exe")) {
 		ns.singularity.purchaseProgram("HTTPWorm.exe");
 	}
+	if (!ns.fileExists("ServerProfiler.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("ServerProfiler.exe")) {
+		ns.singularity.purchaseProgram("ServerProfiler.exe")
+	}
+	if (!ns.fileExists("AutoLink.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("AutoLink.exe")) {
+		ns.singularity.purchaseProgram("AutoLink.exe");
+	}
+	if (!ns.fileExists("DeepscanV1.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("DeepscanV1.exe")) {
+		ns.singularity.purchaseProgram("DeepscanV1.exe");
+	}
+	if (!ns.fileExists("DeepscanV2.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("DeepscanV2.exe")) {
+		ns.singularity.purchaseProgram("DeepscanV2.exe");
+	}
 	if (!ns.fileExists("SQLInject.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("SQLInject.exe")) {
 		ns.singularity.purchaseProgram("SQLInject.exe");
 	}
-	if (!ns.fileExists("FTPCrack.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("ServerProfiler.exe")) {
-		ns.singularity.purchaseProgram("ServerProfiler.exe")
-	}
-	if (!ns.fileExists("HTTPWorm.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("AutoLink.exe")) {
-		ns.singularity.purchaseProgram("AutoLink.exe");
-	}
-	if (!ns.fileExists("relaySMTP.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("DeepscanV1.exe")) {
-		ns.singularity.purchaseProgram("DeepscanV1.exe");
-	}
-	if (!ns.fileExists("SQLInject.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("DeepscanV2.exe")) {
-		ns.singularity.purchaseProgram("DeepscanV2.exe");
-	}
+
 // BruteSSH.exe - $500.000k - Opens up SSH Ports.
 
 // FTPCrack.exe - $1.500m - Opens up FTP Ports.

@@ -18,6 +18,7 @@ export async function main(ns) {
     let targetOne = ns.args[0];
     let targetTwo = ns.args[1];
     let targetThree = ns.args[2];
+    let available_threads = 0
 
     // ns.tail()
     let servers = ns.getPurchasedServers()
@@ -32,20 +33,22 @@ export async function main(ns) {
             if (available_threads >= 1) {
                 ns.exec("/loop/combo.wgh.nocrack.loop.js", server, available_threads, (targetThree))
             }
-            
-                available_threads = threadCount(ns, "S", 2.4)
-                if (available_threads >= 1) {
-                    ns.exec("/loop/combo.wgh.nocrack.loop.js", "S", available_threads, (targetOne))
-                }
-                    available_threads = threadCount(ns, "S-0", 2.4)
-                if (available_threads >= 1) {
-                
-                    ns.exec("/loop/combo.wgh.nocrack.loop.js", "S-0", available_threads, (targetTwo))
-                }
-            
+        }
+        if (server == "S") {
+            available_threads = threadCount(ns, "S", 2.4)
+            if (available_threads >= 1) {
+                ns.exec("/loop/combo.wgh.nocrack.loop.js", "S", available_threads, (targetOne))
+            }
+        }
+        if (server == "S-0") {
+            available_threads = threadCount(ns, "S-0", 2.4)
+            if (available_threads >= 1) {
+
+                ns.exec("/loop/combo.wgh.nocrack.loop.js", "S-0", available_threads, (targetTwo))
+            }
+
         }
     }
-
 
 
 
