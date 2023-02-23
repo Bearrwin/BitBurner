@@ -3,11 +3,6 @@ export async function main(ns) {
 
 	ns.disableLog("getServerMoneyAvailable")
 	ns.disableLog("sleep")
-	// Start the budget manager bot
-	ns.run("/bot/bot.cfo.js")
-	ns.tprint("I made you the CFO now get to work!")
-
-	await ns.sleep(1000)
 
 	// Start timer script
 	ns.run("/bot/bot.timer.5mins.js")
@@ -16,9 +11,10 @@ export async function main(ns) {
 	ns.run("/bot/bot.minions.js")
 
 
-	await ns.sleep(15000)
-
-
+	// Start the budget manager bot
+	ns.run("/bot/bot.cfo.js")
+	ns.tprint("I made you the CFO now get to work!")
+	
 
 	// start script to determine best target to hack
 	ns.tprint("Starting our Hacking target assessment.")
@@ -27,12 +23,11 @@ export async function main(ns) {
 
 	ns.tprint("Sleep now!")
 	await ns.sleep(2000)
-	ns.run("/bot/sleepNow.js")
-	// ns.singularity.installAugmentations("TheFatController.js")
+	//  ns.singularity.installAugmentations("TheFatController.js")
 
 
 
-
+	
 
 
 

@@ -21,6 +21,7 @@ function serverList(ns, current = "home", set = new Set()) {
 export async function main(ns) {
     ns.disableLog("sleep")
     ns.tail()
+    await ns.sleep(1000)
     ns.moveTail(50, 50)
     ns.resizeTail(500, 150)
 

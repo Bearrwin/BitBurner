@@ -13,10 +13,10 @@ export async function main(ns) {
 	if (!ns.fileExists("FTPCrack.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("FTPCrack.exe")) {
 		ns.singularity.purchaseProgram("FTPCrack.exe");
 	}
-	if (!ns.fileExists("HTTPWorm.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("relaySMTP.exe")) {
+	if (!ns.fileExists("relaySMTP.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("relaySMTP.exe")) {
 		ns.singularity.purchaseProgram("relaySMTP.exe");
 	}
-	if (!ns.fileExists("relaySMTP.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("HTTPWorm.exe")) {
+	if (!ns.fileExists("HTTPWorm.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("HTTPWorm.exe")) {
 		ns.singularity.purchaseProgram("HTTPWorm.exe");
 	}
 	if (!ns.fileExists("ServerProfiler.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("ServerProfiler.exe")) {
@@ -34,9 +34,9 @@ export async function main(ns) {
 	if (!ns.fileExists("SQLInject.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("SQLInject.exe")) {
 		ns.singularity.purchaseProgram("SQLInject.exe");
 	}
-	if (!ns.fileExists("Formulas.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("Formulas.exe")) {
-		ns.singularity.purchaseProgram("Formulas.exe");
-	}
+	// if (!ns.fileExists("Formulas.exe", "home") && ns.getServerMoneyAvailable("home") > ns.singularity.getDarkwebProgramCost("Formulas.exe")) {
+	// 	ns.singularity.purchaseProgram("Formulas.exe");
+	// }
 
 
 	// BruteSSH.exe - $500.000k - Opens up SSH Ports.
