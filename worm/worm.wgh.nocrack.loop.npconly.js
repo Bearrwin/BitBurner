@@ -4,7 +4,7 @@
  * Returns an array of servers dynamically
  */
 
-// run worm.wgh.js silver-helix
+
 
 function serverList(ns, current = "home", set = new Set()) {
     let connections = ns.scan(current)

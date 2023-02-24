@@ -29,14 +29,16 @@ export async function main(ns) {
 	ns.run("/bot/bot.hacktarget.StageTwo.js")
 	await ns.sleep(1000)
 
+	var stageTwoDone = false
+
+	while (stageTwoDone == false) {
+		stageTwoDone = ns.read("/savedVar/stageTwoDone.txt") === "true" ? true : false;
+		await ns.sleep(60000)
+
+	}
 	// ns.tprint("Sleep now!")
 	// await ns.sleep(2000)
-	// ns.run("sleepNow.js")
 	// ns.singularity.installAugmentations("TheFatController.js")
-
-
-
-
 
 
 
