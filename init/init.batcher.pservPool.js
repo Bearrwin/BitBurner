@@ -14,7 +14,7 @@ export async function main(ns) {
 	var delayms = ns.args[4];
 	var counterMax = 2400
 	var counter = 1
-	var hackDelay = true
+	var hackDelay = false
 	var hackDelayms = 0
 	var hackDelaycounter = hackDelayms
 
@@ -33,14 +33,14 @@ export async function main(ns) {
 	let secHigh = sec - minSec
 	var breakdelay = ns.getWeakenTime(hackTarget)
 	var breakAmmoCounter = 10
+	
+	// ns.run("/serv/serv.propagate.all.js")
+	await ns.sleep(5000);
 
-	ns.run("/serv/serv.propagate.all.js")
-	await ns.sleep(2000);
+	// Check and see if we need to break server security first.
+	if (secHigh > 2) {
+		while (breakAmmoCounter > 0) {
 
-	//	Check and see if we need to break server security first.
-	while (breakAmmoCounter > 0) {
-
-		if (secHigh > 2) {
 			ns.tprint("Breaking Security on " + hackTarget)
 			let breakWeakThreads = Math.ceil(secHigh * 2)
 			ns.tprint("Break Threads " + breakWeakThreads)
@@ -69,20 +69,20 @@ export async function main(ns) {
 			await ns.sleep(100);
 			if (haveBreakHost == true) {
 				ns.exec("/ammo/cw1.single.js", (nextBreakHost), (breakWeakThreads), (hackTarget), 5011 - breakAmmoCounter);
-				ns.tprint("Waiting for " + ` weaken__: ${ns.tFormat(breakdelay + 5000)}`)
+				ns.tprint("Waiting for " + (breakdelay + 5000))
 				breakAmmoCounter--
 			}
 
+			await ns.sleep(100);
 		}
-
-	}
 	await ns.sleep(breakdelay + 5000);
+	}
 
 	while (true) {
 		if (hackDelayms < delayms) {
 			hackDelayms = 0
 		}
-
+		purchServList = ns.getPurchasedServers()
 		for (let server of purchServList) {
 			if (haveHost == false) {
 				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (scriptRam * 5)) {
