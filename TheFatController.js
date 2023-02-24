@@ -3,7 +3,7 @@ export async function main(ns) {
 
 	var stageOneDone = false
 
-	ns.write("/savedVar/StageOneDone", "true", "w")
+	ns.write("/savedVar/stageOneDone.txt", "true", "w")
 
 	ns.disableLog("sleep")
 	// Start the budget manager bot

@@ -119,7 +119,7 @@ export async function main(ns) {
 	let goalTwelveMoney = 15000000000
 
 
-	ns.write("/savedVar/StageOneDone", "false", "w")
+	ns.write("/savedVar/StageOneDone.txt", "false", "w")
 	// The above block initialises all our variables, now we will go through and update them.
 	// When you declare or update a variable use a single = when you evaluate if a variable is 
 	// equal to something use a double == Below you can see we are checking with our if statement
@@ -549,7 +549,7 @@ export async function main(ns) {
 	goalTwelve = true
 	ns.tprint("Goal Twelve is complete, time to install augments");
 	ns.tprint("");
-	ns.write("/savedVar/StageOneDone", "true", "w")
+	ns.write("/savedVar/stageOneDone.txt", "true", "w")
 
 
 
