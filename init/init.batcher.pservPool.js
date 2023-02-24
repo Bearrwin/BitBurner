@@ -3,6 +3,9 @@ export async function main(ns) {
 
 	// 	run test.js computek 3 18 2 5000 
 	ns.tail()
+	await ns.sleep(1000)
+	ns.moveTail(50, 50)
+	ns.resizeTail(500, 150)
 
 	var hackTarget = ns.args[0];
 	var weakThreads = ns.args[1];
@@ -12,7 +15,7 @@ export async function main(ns) {
 	var counterMax = 2400
 	var counter = 1
 	var hackDelay = true
-	var hackDelayms = ns.getWeakenTime(hackTarget)
+	var hackDelayms = 0
 	var hackDelaycounter = hackDelayms
 
 	let nextHost = false
@@ -29,36 +32,50 @@ export async function main(ns) {
 	const sec = ns.getServerSecurityLevel(hackTarget);
 	let secHigh = sec - minSec
 	var breakdelay = ns.getWeakenTime(hackTarget)
+	var breakAmmoCounter = 10
 
 	ns.run("/serv/serv.propagate.all.js")
+	await ns.sleep(2000);
 
 	//	Check and see if we need to break server security first.
-	if (secHigh > 2) {
-		let breakWeakThreads = Math.ceil(secHigh * 40)
-		let breakScriptRam = ns.getScriptRam(scriptOne) * breakWeakThreads * 2
-		
-		for (let server of purchServList) {
-			if (haveBreakHost == false) {
-				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (breakScriptRam)) {
-					haveBreakHost = true
-					nextBreakHost = server
-					ns.tprint("got" + nextBreakHost)
+	while (breakAmmoCounter > 0) {
 
+		if (secHigh > 2) {
+			ns.tprint("Breaking Security on " + hackTarget)
+			let breakWeakThreads = Math.ceil(secHigh * 2)
+			ns.tprint("Break Threads " + breakWeakThreads)
+			let breakScriptRam = ns.getScriptRam(scriptOne) * breakWeakThreads
+			ns.tprint("Break RAM " + breakScriptRam)
+
+			for (let server of purchServList) {
+				if (haveBreakHost == false) {
+					if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (breakScriptRam * 4)) {
+						haveBreakHost = true
+						nextBreakHost = server
+					} else {
+						haveBreakHost = false
+					}
+				}
+
+			}
+			if (haveBreakHost == false) {
+				if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (breakScriptRam * 4)) {
+					haveBreakHost = true
+					nextBreakHost = "home"
 				} else {
 					haveBreakHost = false
-
 				}
+			}
+			await ns.sleep(100);
+			if (haveBreakHost == true) {
+				ns.exec("/ammo/cw1.single.js", (nextBreakHost), (breakWeakThreads), (hackTarget), 5011 - breakAmmoCounter);
+				ns.tprint("Waiting for " + ` weaken__: ${ns.tFormat(breakdelay + 5000)}`)
+				breakAmmoCounter--
 			}
 
 		}
 
-		if (haveBreakHost == true) {
-			ns.exec("/ammo/cw1.single.js", (nextBreakHost), (breakWeakThreads), (hackTarget), 5001);
-			ns.tprint("Waiting for " + ` weaken__: ${ns.tFormat(breakdelay + 5000)}`)
-		}
-
 	}
-
 	await ns.sleep(breakdelay + 5000);
 
 	while (true) {
@@ -79,7 +96,15 @@ export async function main(ns) {
 			}
 
 		}
-
+		if (haveHost == false) {
+			if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (scriptRam * 5)) {
+				haveHost = true
+				nextHost = "home"
+			} else {
+				haveHost = false
+			}
+		}
+		await ns.sleep(10);
 		if (haveHost == true) {
 			ns.exec("/ammo/cw1.single.js", (nextHost), (weakThreads), (hackTarget), (counter));
 			ns.exec("/ammo/cg1.single.js", (nextHost), (growThreads), (hackTarget), (counter));
@@ -88,13 +113,16 @@ export async function main(ns) {
 
 				ns.exec("/ammo/ch1.single.js", (nextHost), (hackThreads), (hackTarget), (counter));
 			}
-			hackDelaycounter -= delayms
+
 
 
 			await ns.sleep((delayms));
 			counter++
 			if ((counter) >= (counterMax)) {
 				(counter) = 1
+			}
+			if (hackDelay == true) {
+				hackDelaycounter -= delayms
 			}
 			if (hackDelay == true && hackDelaycounter < delayms) {
 				hackDelaycounter = 0
@@ -111,59 +139,3 @@ export async function main(ns) {
 	}
 
 }
-
-	// let nowCity = ns.getPlayer().city
-	// ns.tprint(nowCity)
-
-	// let currentWork = ns.singularity.getCurrentWork()
-	// ns.tprint(currentWork)
-	// if (Object.values(currentWork).includes("BitRunners")) {
-	// 	ns.tprint("It worked")
-	// } else {
-	// 	ns.tprint("It didn't work")
-	// }
-
-	// let currentWork = ns.singularity.getCurrentWork()
-	// ns.tprint(currentWork)
-
-	// ns.tail()
-	// ns.moveTail(50,50)
-	// ns.resizeTail(500,150)
-	// const name = "Bit";
-	// const age = 4;
-	// ns.printf("My name is %s.", name);
-	// ns.printf("I'm %d seconds old.", age);
-	// ns.printf("My age in binary is %b.", age);
-	// ns.printf("My age in scientific notation is %e.", age);
-	// ns.printf("In %d seconds, I'll be %s.", 6, "Byte");
-	// ns.printf("Am I a nibble? %t", (4 == age));
-
-
-
-
-
-	// let server = ns.args[0]
-	// let csb = ns.getServer(server).backdoorInstalled
-	// ns.tprint(csb)
-	// // let bitNode = ns.getPlayer().bitNodeN
-	// ns.tprint(bitNode)
-
-	// var stageOne = ns.read("/savedVar/stageOne.txt") === "true" ? true : false;
-
-
-	// if (stageOne == true) {
-
-	// 	ns.tprint(stageOne + " is a boolean")
-	// }
-
-	// if (stageOne == "true") {
-
-	// ns.tprint(stageOne + " is a string")
-
-	// }
-	// let purchServList = ns.getPurchasedServers()
-	// let purchServCount = 0
-	// for (let server of purchServList) {
-	// 	purchServCount++
-	// }
-	// ns.tprint(purchServCount + " servers")

@@ -24,7 +24,6 @@ export async function main(ns) {
 	ns.tprint(playerFaction)
 	ns.print(playerFaction)
 
-
 	if (stageOne == true) {
 		// start doing algorithms course at rothman uni via a sebscript to save on 
 		// continual RAM usage
@@ -45,7 +44,7 @@ export async function main(ns) {
 		// If we don't belong to CyberSec, then while we don't have an invitation wait,
 		// when we do have an invitation run script to accept invite and work for them
 		// these actions are RAM hogs so we have split off some actions until 
-		// Source file 4.3 is available.
+		// stage two when more home RAM is available.
 
 		// ***** NB First time around in a new bitnode you won't have BruteSSH.exe
 		// for some time after your hacking skill gets to the level you can backdoor
@@ -127,7 +126,7 @@ export async function main(ns) {
 			ns.write("/savedVar/niteSecDone.txt", "true", "w")
 			await ns.sleep(5000)
 		}
-		ns.tprint("NiteSec faction is done, moving to next.")
+		ns.tprint("NiteSec faction is done.")
 
 
 

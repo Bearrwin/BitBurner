@@ -41,6 +41,8 @@ export async function main(ns) {
 	ns.tprint(playerFaction)
 	ns.print(playerFaction)
 
+	await ns.sleep(15000)
+
 	if (ns.getHackingLevel() < 60) {
 		ns.run("/work/uni.rothman.hack.js")
 		ns.tprint("Starting Algorithms course at Rothman-uni")

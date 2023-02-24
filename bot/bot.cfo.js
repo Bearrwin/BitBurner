@@ -118,6 +118,8 @@ export async function main(ns) {
 	let goalTwelve = false
 	let goalTwelveMoney = 15000000000
 
+
+	ns.write("/savedVar/StageOneDone", "false", "w")
 	// The above block initialises all our variables, now we will go through and update them.
 	// When you declare or update a variable use a single = when you evaluate if a variable is 
 	// equal to something use a double == Below you can see we are checking with our if statement
@@ -350,7 +352,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalSixServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalSixServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -372,7 +374,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalSevenServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalSevenServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -394,7 +396,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalEightServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalEightServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -416,7 +418,7 @@ export async function main(ns) {
 			}
 			ns.run("/serv/serv.purchasedupg.auto.js", 1, goalNineServerSize)
 			await ns.sleep(5000)
-			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalFiveServerSize);
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + goalNineServerSize);
 			await ns.sleep(5000)
 		}
 	}
@@ -534,7 +536,7 @@ export async function main(ns) {
 			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
 			await ns.sleep(5000)
 			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "NeuroFlux Governor")
-			
+
 			ns.tprint("Faction check met")
 		} else {
 
@@ -547,7 +549,7 @@ export async function main(ns) {
 	goalTwelve = true
 	ns.tprint("Goal Twelve is complete, time to install augments");
 	ns.tprint("");
-	ns.write("/savedVar/StageOnePhaseOneComplete.txt", "true", "w")
+	ns.write("/savedVar/StageOneDone", "true", "w")
 
 
 

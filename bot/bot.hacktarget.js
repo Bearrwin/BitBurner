@@ -26,68 +26,72 @@ export async function main(ns) {
 	let thirdTarget = "phantasy"
 	let fourthTarget = "silver-helix"
 	let fifthTarget = "omega-net"
-
+	let wgh = true
 
 
 
 	while (stageOne == true) {
 		stageOne = ns.read("/savedVar/stageOne.txt") === "true" ? true : false;
 		if (stageOne == true) {
-
+			if (ns.getServerMaxRam("S") > 1024) {
+				wgh = false
+			}
 
 			ns.run("/utils/isexists.purchServ.js")
 			await ns.sleep(1000)
 			servCount = ns.read("/savedVar/purchServCount.txt")
 			if (servCount > 0) {
 
-				if (ns.fileExists("BruteSSH.exe", "home") && (ns.getHackingLevel() > 150)) {
-					if (stageOnephaseTwoDone == false) {
-						currentTargetOne = secondTarget
-						currentTargetTwo = secondTarget
-						currentTargetThree = secondTarget
-						ns.print("First target set to " + secondTarget)
-						ns.print("Second target set to " + secondTarget)
-						ns.print("Third target set to " + secondTarget)
-						ns.print("")
-						stageOnephaseTwoDone = true
+				while (wgh == true) {
+					if (ns.fileExists("BruteSSH.exe", "home") && (ns.getHackingLevel() > 150)) {
+						if (stageOnephaseTwoDone == false) {
+							currentTargetOne = secondTarget
+							currentTargetTwo = secondTarget
+							currentTargetThree = secondTarget
+							ns.print("First target set to " + secondTarget)
+							ns.print("Second target set to " + secondTarget)
+							ns.print("Third target set to " + secondTarget)
+							ns.print("")
+							stageOnephaseTwoDone = true
+						}
 					}
-				}
-				if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(thirdTarget) && (ns.fileExists("FTPCrack.exe", "home") && ns.getServerMaxRam("S") > 128)) {
-					if (stageOnephaseThreeDone == false) {
-						currentTargetOne = thirdTarget
-						currentTargetTwo = thirdTarget
-						currentTargetThree = thirdTarget
-						ns.print("First target set to " + thirdTarget)
-						ns.print("Second target set to " + thirdTarget)
-						ns.print("Third target set to " + thirdTarget)
-						ns.print("")
-						stageOnephaseThreeDone = true
+					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(thirdTarget) && (ns.fileExists("FTPCrack.exe", "home") && ns.getServerMaxRam("S") > 128)) {
+						if (stageOnephaseThreeDone == false) {
+							currentTargetOne = thirdTarget
+							currentTargetTwo = thirdTarget
+							currentTargetThree = thirdTarget
+							ns.print("First target set to " + thirdTarget)
+							ns.print("Second target set to " + thirdTarget)
+							ns.print("Third target set to " + thirdTarget)
+							ns.print("")
+							stageOnephaseThreeDone = true
+						}
 					}
-				}
-				if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fourthTarget) && ns.hasRootAccess(fourthTarget) && ns.getServerMaxRam("S") > 1024) {
-					if (stageOnephaseFourDone == false) {
-						currentTargetOne = thirdTarget
-						currentTargetTwo = fourthTarget
-						currentTargetThree = fourthTarget
-						ns.print("First target set to " + thirdTarget)
-						ns.print("Second target set to " + fourthTarget)
-						ns.print("Third target set to " + fourthTarget)
-						ns.print("")
-						stageOnephaseFourDone = true
+					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fourthTarget) && ns.hasRootAccess(fourthTarget) && ns.getServerMaxRam("S") > 1024) {
+						if (stageOnephaseFourDone == false) {
+							currentTargetOne = thirdTarget
+							currentTargetTwo = fourthTarget
+							currentTargetThree = fourthTarget
+							ns.print("First target set to " + thirdTarget)
+							ns.print("Second target set to " + fourthTarget)
+							ns.print("Third target set to " + fourthTarget)
+							ns.print("")
+							stageOnephaseFourDone = true
+						}
 					}
-				}
-				if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fifthTarget) && ns.hasRootAccess(fifthTarget) && servCount >= 8) {
-					if (stageOnephaseFiveDone == false) {
-						currentTargetOne = thirdTarget
-						currentTargetTwo = fourthTarget
-						currentTargetThree = fifthTarget
-						ns.print("First target set to " + thirdTarget)
-						ns.print("Second target set to " + fourthTarget)
-						ns.print("Third target set to " + fifthTarget)
-						ns.print("")
-						stageOnephaseFiveDone = true
+					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fifthTarget) && ns.hasRootAccess(fifthTarget) && servCount >= 8) {
+						if (stageOnephaseFiveDone == false) {
+							currentTargetOne = thirdTarget
+							currentTargetTwo = fourthTarget
+							currentTargetThree = fifthTarget
+							ns.print("First target set to " + thirdTarget)
+							ns.print("Second target set to " + fourthTarget)
+							ns.print("Third target set to " + fifthTarget)
+							ns.print("")
+							stageOnephaseFiveDone = true
+						}
+						newTarget = false
 					}
-					newTarget = false
 				}
 			}
 
