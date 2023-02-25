@@ -38,8 +38,8 @@ export async function main(ns) {
 	let torPurch = false
 	const torMoney = 300000
 	let initialServPurch = false
-	const initialServPurchSize = 64
-	const initialServPurchCount = 3
+	const initialServPurchSize = 128
+	const initialServPurchCount = 5
 	const initialServPurchMoney = ns.getPurchasedServerCost(initialServPurchSize)
 	let ftpPurch = false
 	const ftpPurchMoney = 1600000
@@ -50,37 +50,37 @@ export async function main(ns) {
 
 	let firstServUpg = false
 	const firstServUpgServerSize = initialServPurchSize * 2
-	const firstServUpgMoney = Math.ceil((ns.getPurchasedServerCost(firstServUpgServerSize) - ns.getPurchasedServerCost(initialServPurchSize)) * purchServCount)
+	const firstServUpgMoney = Math.ceil((ns.getPurchasedServerCost(firstServUpgServerSize) - ns.getPurchasedServerCost(initialServPurchSize)) * initialServPurchCount)
 	let secondServUpg = false
 	const secondServUpgServerSize = firstServUpgServerSize * 2
-	const secondServUpgMoney = Math.ceil((ns.getPurchasedServerCost(secondServUpgServerSize) - ns.getPurchasedServerCost(firstServUpgServerSize)) * purchServCount)
+	const secondServUpgMoney = Math.ceil((ns.getPurchasedServerCost(secondServUpgServerSize) - ns.getPurchasedServerCost(firstServUpgServerSize)) * initialServPurchCount)
 	let thirdServUpg = false
 	const thirdServUpgServerSize = secondServUpgServerSize * 2
-	const thirdServUpgMoney = Math.ceil((ns.getPurchasedServerCost(thirdServUpgServerSize) - ns.getPurchasedServerCost(secondServUpgServerSize)) * purchServCount)
+	const thirdServUpgMoney = Math.ceil((ns.getPurchasedServerCost(thirdServUpgServerSize) - ns.getPurchasedServerCost(secondServUpgServerSize)) * initialServPurchCount)
 	let fourthServUpg = false
 	const fourthServUpgServerSize = thirdServUpgServerSize * 2
-	const fourthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(fourthServUpgServerSize) - ns.getPurchasedServerCost(thirdServUpgServerSize)) * purchServCount)
+	const fourthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(fourthServUpgServerSize) - ns.getPurchasedServerCost(thirdServUpgServerSize)) * initialServPurchCount)
 	let fifthServUpg = false
 	const fifthServUpgServerSize = fourthServUpgServerSize * 2
-	const fifthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(fifthServUpgServerSize) - ns.getPurchasedServerCost(fourthServUpgServerSize)) * purchServCount)
+	const fifthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(fifthServUpgServerSize) - ns.getPurchasedServerCost(fourthServUpgServerSize)) * initialServPurchCount)
 	let sixthServUpg = false
 	const sixthServUpgServerSize = fifthServUpgServerSize * 2
-	const sixthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(sixthServUpgServerSize) - ns.getPurchasedServerCost(fifthServUpgServerSize)) * purchServCount)
+	const sixthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(sixthServUpgServerSize) - ns.getPurchasedServerCost(fifthServUpgServerSize)) * initialServPurchCount)
 	let seventhServUpg = false
 	const seventhServUpgServerSize = sixthServUpgServerSize * 2
-	const seventhServUpgMoney = Math.ceil((ns.getPurchasedServerCost(seventhServUpgServerSize) - ns.getPurchasedServerCost(sixthServUpgServerSize)) * purchServCount)
+	const seventhServUpgMoney = Math.ceil((ns.getPurchasedServerCost(seventhServUpgServerSize) - ns.getPurchasedServerCost(sixthServUpgServerSize)) * initialServPurchCount)
 	let eighthServUpg = false
 	const eighthServUpgServerSize = seventhServUpgServerSize * 2
-	const eighthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(eighthServUpgServerSize) - ns.getPurchasedServerCost(seventhServUpgServerSize)) * purchServCount)
+	const eighthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(eighthServUpgServerSize) - ns.getPurchasedServerCost(seventhServUpgServerSize)) * initialServPurchCount)
 	let secondServPurch = false
-	const secondServPurchCount = 10
+	const secondServPurchCount = 15
 	const secondServPurchSize = eighthServUpgServerSize
 	const secondServPurchMoney = ns.getPurchasedServerCost(secondServPurchSize)
 	let homeRamUpgStageTwo = false
 	const homeRamUpgStageTwoSize = 16384
-	const homeRamUpgStageTwoMoney = 105000000000
-	let augPurchStageTwo = true
-	const augPurchStageTwoMoney = 135000000000
+	const homeRamUpgStageTwoMoney = 320000000000
+	let augPurchStageTwo = false
+	const augPurchStageTwoMoney = 200000000000
 
 
 
@@ -123,7 +123,7 @@ export async function main(ns) {
 		}
 	}
 
-	if (ns.getServerMaxRam("home") >= 16384) {
+	if (ns.getServerMaxRam("home") >= 32768) {
 		homeRamUpgStageTwo = true
 	}
 
@@ -409,6 +409,7 @@ export async function main(ns) {
 
 		}
 	}
+	ns.run("/utils/darkweb.auto.js")
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	homeRamUpgStageTwo = true
 	await ns.sleep(5000)
@@ -471,7 +472,7 @@ export async function main(ns) {
 	augPurchStageTwo = true
 	ns.tprint("Goal Twelve is complete, time to install augments");
 	ns.tprint("");
-	ns.write("/savedVar/stageThreeDone.txt", "true", "w")
+	// ns.write("/savedVar/stageThreeDone.txt", "true", "w")
 
 
 

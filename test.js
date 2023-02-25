@@ -1,116 +1,13 @@
 /** @param {NS} ns */
 export async function main(ns) {
 
-	// 	run test.js computek 3 18 2 5000 
-	ns.tail()
 
-	var hackTarget = ns.args[0];
-	var weakThreads = ns.args[1];
-	var growThreads = ns.args[2];
-	var hackThreads = ns.args[3];
-	var delayms = ns.args[4];
-	var counterMax = 2400
-	var counter = 1
-	var hackDelay = true
-	var hackDelayms = ns.getWeakenTime(hackTarget)
-	var hackDelaycounter = hackDelayms
+ns.tprint(ns.heart.break())
 
-	let nextHost = false
-	let haveHost = false
-	let nextBreakHost = false
-	let haveBreakHost = false
-	let purchServList = ns.getPurchasedServers()
-	let scriptOne = "/ammo/cw1.single.js"
-	let scriptTwo = "/ammo/cg1.single.js"
-	let scriptThree = "/ammo/ch1.single.js"
-	let scriptRam = ((ns.getScriptRam(scriptOne) * weakThreads) + (ns.getScriptRam(scriptTwo) * growThreads) + (ns.getScriptRam(scriptThree) * hackThreads))
-	let reserveHomeRam = 64
-	const minSec = ns.getServerMinSecurityLevel(hackTarget);
-	const sec = ns.getServerSecurityLevel(hackTarget);
-	let secHigh = sec - minSec
-	var breakdelay = ns.getWeakenTime(hackTarget)
-
-	ns.run("/serv/serv.propagate.all.js")
-
-	//	Check and see if we need to break server security first.
-	if (secHigh > 2) {
-		let breakWeakThreads = Math.ceil(secHigh * 40)
-		let breakScriptRam = ns.getScriptRam(scriptOne) * breakWeakThreads * 2
-		
-		for (let server of purchServList) {
-			if (haveBreakHost == false) {
-				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (breakScriptRam)) {
-					haveBreakHost = true
-					nextBreakHost = server
-					ns.tprint("got" + nextBreakHost)
-
-				} else {
-					haveBreakHost = false
-
-				}
-			}
-
-		}
-
-		if (haveBreakHost == true) {
-			ns.exec("/ammo/cw1.single.js", (nextBreakHost), (breakWeakThreads), (hackTarget), 5001);
-			ns.tprint("Waiting for " + ` weaken__: ${ns.tFormat(breakdelay + 5000)}`)
-		}
-
-	}
-
-	await ns.sleep(breakdelay + 5000);
-
-	while (true) {
-		if (hackDelayms < delayms) {
-			hackDelayms = 0
-		}
-
-		for (let server of purchServList) {
-			if (haveHost == false) {
-				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (scriptRam * 5)) {
-					haveHost = true
-					nextHost = server
-
-				} else {
-					haveHost = false
-
-				}
-			}
-
-		}
-
-		if (haveHost == true) {
-			ns.exec("/ammo/cw1.single.js", (nextHost), (weakThreads), (hackTarget), (counter));
-			ns.exec("/ammo/cg1.single.js", (nextHost), (growThreads), (hackTarget), (counter));
-
-			if (hackDelay == false) {
-
-				ns.exec("/ammo/ch1.single.js", (nextHost), (hackThreads), (hackTarget), (counter));
-			}
-			hackDelaycounter -= delayms
-
-
-			await ns.sleep((delayms));
-			counter++
-			if ((counter) >= (counterMax)) {
-				(counter) = 1
-			}
-			if (hackDelay == true && hackDelaycounter < delayms) {
-				hackDelaycounter = 0
-				hackDelay = false
-			}
-
-			haveHost = false
-
-
-		}
-
-
-		await ns.sleep(10);
-	}
 
 }
+	// let strStat = ns.getPlayer().skills.strength
+	// ns.tprint("Your Str is " + strStat)
 
 	// let nowCity = ns.getPlayer().city
 	// ns.tprint(nowCity)

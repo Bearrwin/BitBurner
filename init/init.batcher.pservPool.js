@@ -49,7 +49,7 @@ export async function main(ns) {
 
 			for (let server of purchServList) {
 				if (haveBreakHost == false) {
-					if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (breakScriptRam * 4)) {
+					if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (breakScriptRam * 5)) {
 						haveBreakHost = true
 						nextBreakHost = server
 					} else {
@@ -59,7 +59,7 @@ export async function main(ns) {
 
 			}
 			if (haveBreakHost == false) {
-				if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (breakScriptRam * 4)) {
+				if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (breakScriptRam * 5)) {
 					haveBreakHost = true
 					nextBreakHost = "home"
 				} else {
@@ -69,7 +69,7 @@ export async function main(ns) {
 			await ns.sleep(100);
 			if (haveBreakHost == true) {
 				ns.exec("/ammo/cw1.single.js", (nextBreakHost), (breakWeakThreads), (hackTarget), 5011 - breakAmmoCounter);
-				ns.tprint("Waiting for " + (breakdelay + 5000))
+				ns.tprint("Waiting for " + ns.tFormat(breakdelay + 5000))
 				breakAmmoCounter--
 			}
 
@@ -83,9 +83,10 @@ export async function main(ns) {
 			hackDelayms = 0
 		}
 		purchServList = ns.getPurchasedServers()
+		// ns.tprint("scriptRam is " + scriptRam)
 		for (let server of purchServList) {
 			if (haveHost == false) {
-				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (scriptRam * 5)) {
+				if (Math.floor(ns.getServerMaxRam(server) - ns.getServerUsedRam(server)) > (scriptRam * 3)) {
 					haveHost = true
 					nextHost = server
 
@@ -97,7 +98,7 @@ export async function main(ns) {
 
 		}
 		if (haveHost == false) {
-			if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (scriptRam * 5)) {
+			if ((Math.floor(ns.getServerMaxRam("home") - ns.getServerUsedRam("home")) - reserveHomeRam) > (scriptRam * 3)) {
 				haveHost = true
 				nextHost = "home"
 			} else {

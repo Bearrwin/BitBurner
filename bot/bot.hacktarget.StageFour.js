@@ -59,16 +59,16 @@ export async function main(ns) {
 			// First config to run
 
 			if (servCount <= 3 && phaseOneDone == false) {
-				currentTarget = firstTarget
 				wThreads = 2
 				gThreads = 10
 				hThreads = 20
 				cycleDelay = 100
+				currentTarget = firstTarget
 				targetChange = true
 				phaseOneDone = true
 			}
 			await ns.sleep(200)
-			if (servCount >= 3 && servRam >= 128 && phaseTwoDone == false) {
+			if (servCount >= 5 && servRam >= 128 && phaseTwoDone == false) {
 				wThreads = 5
 				gThreads = 60
 				hThreads = 5
@@ -78,7 +78,7 @@ export async function main(ns) {
 				phaseTwoDone = true
 			}
 			await ns.sleep(200)
-			if (servCount >= 3 && servRam >= 1024 && phaseThreeDone == false) {
+			if (servCount >= 5 && servRam >= 1024 && phaseThreeDone == false) {
 				wThreads = 5
 				gThreads = 60
 				hThreads = 5
@@ -88,7 +88,7 @@ export async function main(ns) {
 				phaseThreeDone = true
 			}
 			await ns.sleep(200)
-			if (servCount >= 3 && servRam >= 4096 && phaseFourDone == false) {
+			if (servCount >= 5 && servRam >= 4096 && phaseFourDone == false) {
 				wThreads = 4
 				gThreads = 45
 				hThreads = 4
@@ -98,7 +98,7 @@ export async function main(ns) {
 				phaseFourDone = true
 			}
 			await ns.sleep(200)
-			if (servCount >= 3 && servRam >= 8192 && phaseFiveDone == false) {
+			if (servCount >= 5 && servRam >= 8192 && phaseFiveDone == false) {
 				wThreads = 10
 				gThreads = 120
 				hThreads = 10
@@ -108,7 +108,7 @@ export async function main(ns) {
 				phaseFiveDone = true
 			}
 			await ns.sleep(200)
-			if (servCount >= 4 && servRam >= 8192 && phaseSixDone == false) {
+			if (servCount >= 5 && servRam >= 8192 && phaseSixDone == false) {
 				wThreads = 10
 				gThreads = 120
 				hThreads = 10
@@ -143,6 +143,8 @@ export async function main(ns) {
 				ns.tprint("PID to kill is " + pidOne)
 				ns.kill(pidOne)
 				var pidOne = ns.run("/init/init.batcher.pservPool.js", 1, currentTarget, wThreads, gThreads, hThreads, cycleDelay)
+				await ns.sleep(500)
+				ns.tprint("New PID is " + pidOne)
 				if (doubleBarrel == true) {
 					ns.tprint("PID2 to kill is " + pidTwo)
 					ns.kill(pidTwo)

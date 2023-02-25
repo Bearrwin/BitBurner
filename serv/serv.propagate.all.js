@@ -13,7 +13,7 @@ ns.tail()
 for (let serverName of servers) {
 
 	ns.exec("/serv/serv.propagate.bought.js", "home", 1, serverName)
-await ns.sleep(500);
+await ns.sleep(100);
 };
 
 

@@ -34,14 +34,19 @@ export async function main(ns) {
 
 
 	for (let server of goldilocks) {
+		var player = ns.getPlayer()
 		let separator = ns.args[1];
-		let weakTime = ns.getWeakenTime(server)
+		var so = ns.getServer(server)
+		so.hackDifficulty = so.minDifficulty
+		so.moneyAvailable = so.moneyMax
+		let weakTime = ns.formulas.hacking.weakenTime(so, player)
+		let moneyPerThread = ns.formulas.hacking.hackPercent(so, player)
 		let maxMoney = Math.floor(ns.getServerMaxMoney(server) / 1000000);
 		let minsecurity = ns.getServerMinSecurityLevel(server);
 		let hackreq = ns.getServerRequiredHackingLevel(server);
 		let growrate = ns.getServerGrowth(server);
 		// ns.print(server + " Max $" + maxMoney + "M / " + growrate + " Grow / " + minsecurity + " Min Sec / " + hackreq + " Req Hack " + `${ns.tFormat(weakTime)}` + " Weak Time")
-		ns.tprint(server + " Max $" + maxMoney + "M / " + growrate + " Grow / " + minsecurity + " Min Sec / " + hackreq + " Req Hack / " + `${ns.tFormat(weakTime)}` + " Weak Time")
+		ns.tprint(server + "/ $" + maxMoney + "M/ " + growrate + "Grow/ " + minsecurity + "Sec/ " + hackreq + " Req / " + `${ns.tFormat(weakTime)}` + "/" + ns.formatNumber(moneyPerThread * 100000))
 		serverCount++
 		if (separator == 1) {
 			ns.tprint("---------------------------------------------------------------------------------------")
