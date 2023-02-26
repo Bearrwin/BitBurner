@@ -53,26 +53,29 @@ export async function main(ns) {
 	// while (ns.getHackingLevel() < 60) {
 	// 	await ns.sleep(1000)
 	// }
-	var assholishness = ns.heart.break()
-	if (assholishness > -18) {
-		ns.singularity.commitCrime("Homicide")
-		while (assholishness > -18) {
-			await ns.sleep(2000)
-			assholishness = ns.heart.break()
 
-		}
+	if (ns.getHackingLevel() < 60) {
+		ns.run("/work/uni.rothman.hack.js")
+		ns.tprint("Starting Algorithms course at Rothman-uni")
 	}
+
+
+	while (ns.getHackingLevel() < 60) {
+		await ns.sleep(1000)
+	}
+
+	ns.run("/work/company.alpha-ent.js")
+	await ns.sleep(1000)
 	if (!playerFaction.includes("CyberSec")) {
+		ns.write("/savedVar/newTarget.txt", "true", "w")
+		await ns.sleep(30000)
 	}
-	ns.write("/savedVar/newTarget.txt", "true", "w")
-	await ns.sleep(30000)
-
+	
 	while (true) {
 		currentWork = ns.singularity.getCurrentWork()
 		playerFaction = ns.getPlayer().factions
 		invites = ns.singularity.checkFactionInvitations()
 		currentCity = ns.getPlayer().city
-		let strStat = ns.getPlayer().skills.strength
 		await ns.sleep(1000)
 		for (let invite of invites) {
 			ns.tprint("your invite is " + invite)
@@ -102,24 +105,13 @@ export async function main(ns) {
 		await ns.sleep(1000)
 		if (playerFaction.includes("Tian Di Hui") && tianDiHuiDone == false && !Object.values(currentWork).includes("Tian Di Hui")) {
 			csecDone = true
-			ns.singularity.workForFaction("Tian Di Hui", "security")
+			ns.singularity.workForFaction("Tian Di Hui", "hacking")
 		}
 		await ns.sleep(1000)
-		if (playerFaction.includes("Tetrads") && tetradsDone == false && !Object.values(currentWork).includes("Tetrads")) {
+				
+		if (ns.singularity.getFactionRep("Tian Di Hui") > 8000) {
 			tianDiHuiDone = true
-			ns.singularity.workForFaction("Tetrads", "security")
-		}
-		await ns.sleep(1000)
-
-		if (playerFaction.includes("BitRunners") && bitrunnersDone == false && !Object.values(currentWork).includes("BitRunners") && ns.singularity.getFactionRep("Tetrads") > 25000) {
-			tetradsDone = true
-			ns.write("/savedVar/tetradsDone.txt", "true", "w")
-			ns.singularity.workForFaction("BitRunners", "Hacking")
-		}
-
-		if (ns.singularity.getFactionRep("BitRunners") >= 200000) {
-			bitrunnersDone = true
-			ns.write("/savedVar/bitrunnersDone.txt", "true", "w")
+			ns.write("/savedVar/tianDiHuiDone.txt", "true", "w")
 		}
 		await ns.sleep(30000)
 
