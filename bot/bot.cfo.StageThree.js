@@ -79,7 +79,7 @@ export async function main(ns) {
 	let homeRamUpgStageTwo = false
 	const homeRamUpgStageTwoSize = 16384
 	const homeRamUpgStageTwoMoney = 105000000000
-	let augPurchStageTwo = true
+	let augPurchStageTwo = false
 	const augPurchStageTwoMoney = 135000000000
 
 

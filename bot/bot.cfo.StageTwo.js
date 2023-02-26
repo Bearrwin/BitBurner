@@ -74,7 +74,7 @@ export async function main(ns) {
 	const homeRamUpgStageTwoSize = 4096
 	const homeRamUpgStageTwoMoney = 15000000000
 	let augPurchStageTwo = false
-	const augPurchStageTwoMoney = 40000000000
+	const augPurchStageTwoMoney = 58000000000
 
 
 
@@ -387,6 +387,8 @@ export async function main(ns) {
 		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "CRTX42-AA Gene Modification")
 		await ns.sleep(2000)
 		ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "Social Negotiation Assistant (S.N.A)")
+		await ns.sleep(2000)
+		ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "ADR-V1 Pheromone Gene")
 		await ns.sleep(2000)
 		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
 		await ns.sleep(5000)
