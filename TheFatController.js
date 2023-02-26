@@ -34,11 +34,11 @@ export async function main(ns) {
 	}
 	ns.tprint("Sleep now!")
 	await ns.sleep(2000)
-	if (stageOneDone == true) {
+	// if (stageOneDone == true) {
 
-		ns.singularity.installAugmentations("TheFatController.StageTwo.js")
+	// 	ns.singularity.installAugmentations("TheFatController.StageTwo.js")
 
-	}
+	// }
 
 
 
