@@ -38,39 +38,29 @@ export async function main(ns) {
 	var bitrunnersDone = false
 	var chongqingDone = false
 	var tetradsDone = false
+	var daedalusDone = false
 	var invites = ns.singularity.checkFactionInvitations()
 	var currentWork = ns.singularity.getCurrentWork()
 	var currentCity = ns.getPlayer().city
 	ns.tprint(playerFaction)
 	ns.print(playerFaction)
 
-	// if (ns.getHackingLevel() < 60) {
-	// 	ns.run("/work/uni.rothman.hack.js")
-	// 	ns.tprint("Starting Algorithms course at Rothman-uni")
-	// }
+	if (ns.getHackingLevel() < 60) {
+		ns.run("/work/uni.rothman.hack.js")
+		ns.tprint("Starting Algorithms course at Rothman-uni")
+	}
 
+	while (ns.getHackingLevel() < 60) {
+		await ns.sleep(1000)
+	}
 
-	// while (ns.getHackingLevel() < 60) {
-	// 	await ns.sleep(1000)
-	// }
-
-	// if (ns.getHackingLevel() < 60) {
-	// 	ns.run("/work/uni.rothman.hack.js")
-	// 	ns.tprint("Starting Algorithms course at Rothman-uni")
-	// }
-
-
-	// while (ns.getHackingLevel() < 60) {
-	// 	await ns.sleep(1000)
-	// }
-	
 	ns.run("/work/company.alpha-ent.js")
-	await ns.sleep(10000)
+	await ns.sleep(2000)
 	if (!playerFaction.includes("CyberSec")) {
 		ns.write("/savedVar/newTarget.txt", "true", "w")
 		await ns.sleep(30000)
 	}
-	
+
 	while (true) {
 		currentWork = ns.singularity.getCurrentWork()
 		playerFaction = ns.getPlayer().factions
@@ -84,18 +74,6 @@ export async function main(ns) {
 				ns.singularity.joinFaction(invite)
 		}
 		await ns.sleep(1000)
-		if (!playerFaction.includes("New Tokyo") && currentCity != "New Tokyo") {
-			ns.singularity.travelToCity("New Tokyo")
-		}
-		if (!playerFaction.includes("Chongqing") && playerFaction.includes("New Tokyo") && playerFaction.includes("Tian Di Hui")  && currentCity != "Chongqing") {
-			ns.singularity.travelToCity("Chongqing")
-		}
-		if (!playerFaction.includes("Ishima") && playerFaction.includes("Chongqing") && currentCity != "Ishima") {
-			ns.singularity.travelToCity("Ishima")
-		}
-		if (playerFaction.includes("Ishima") && currentCity != "Sector-12") {
-			ns.singularity.travelToCity("Sector-12")
-		}
 
 		// -----------------------------
 
@@ -103,15 +81,15 @@ export async function main(ns) {
 			ns.singularity.workForFaction("CyberSec", "Hacking")
 		}
 		await ns.sleep(1000)
-		if (playerFaction.includes("Tian Di Hui") && tianDiHuiDone == false && !Object.values(currentWork).includes("Tian Di Hui")) {
+		if (playerFaction.includes("Daedalus") && !Object.values(currentWork).includes("Daedalus")) {
 			csecDone = true
-			ns.singularity.workForFaction("Tian Di Hui", "hacking")
+			ns.singularity.workForFaction("Daedalus", "hacking")
 		}
 		await ns.sleep(1000)
-				
-		if (ns.singularity.getFactionRep("Tian Di Hui") > 8000) {
-			tianDiHuiDone = true
-			ns.write("/savedVar/tianDiHuiDone.txt", "true", "w")
+
+		if (ns.singularity.getFactionRep("Daedalus") > 200000) {
+			daedalusDone = true
+			ns.write("/savedVar/daedalusDone.txt", "true", "w")
 		}
 		await ns.sleep(30000)
 
@@ -125,3 +103,16 @@ export async function main(ns) {
 
 
 }
+
+// if (!playerFaction.includes("New Tokyo") && currentCity != "New Tokyo") {
+// 	ns.singularity.travelToCity("New Tokyo")
+// }
+// if (!playerFaction.includes("Chongqing") && playerFaction.includes("New Tokyo") && currentCity != "Chongqing") {
+// 	ns.singularity.travelToCity("Chongqing")
+// }
+// if (!playerFaction.includes("Ishima") && playerFaction.includes("Chongqing") && currentCity != "Ishima") {
+// 	ns.singularity.travelToCity("Ishima")
+// }
+// if (playerFaction.includes("Ishima") && currentCity != "Sector-12") {
+// 	ns.singularity.travelToCity("Sector-12")
+// }
