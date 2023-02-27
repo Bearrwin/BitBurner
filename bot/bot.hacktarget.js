@@ -41,16 +41,18 @@ export async function main(ns) {
 	var pidOne = 0
 	var pidTwo = 0
 
-	if (ns.getServerMaxRam("S") >= 256) {
-		wgh = false
-	}
-
-
-	while (wgh == true) {
+	if (servCount > 0) {
 		if (ns.getServerMaxRam("S") >= 256) {
 			wgh = false
 		}
+	}
 
+	while (wgh == true) {
+		if (servCount > 0) {
+			if (ns.getServerMaxRam("S") >= 256) {
+				wgh = false
+			}
+		}
 		ns.run("/utils/isexists.purchServ.js")
 		await ns.sleep(1000)
 		servCount = ns.read("/savedVar/purchServCount.txt")
@@ -61,7 +63,7 @@ export async function main(ns) {
 		ns.run("/worm/worm.nuke.js")
 		ns.tprint("Running Nuke worm to crack all possible ports and nuke all possible servers.")
 		ns.tprint("")
-		await ns.sleep(30000)
+		await ns.sleep(15000)
 		// 	run the worm that kills all scripts on all servers except home.
 		ns.run("/worm/worm.killall.excepthome.js")
 		ns.tprint("Killing old scripts everywhere but home")
@@ -105,8 +107,7 @@ export async function main(ns) {
 		await ns.sleep(1000)
 		servCount = ns.read("/savedVar/purchServCount.txt")
 		var servRam = ns.getServerMaxRam("S")
-
-		if (servCount >= 3 && servRam >= 256 && phaseTwoDone == false) {
+		if (servCount >= 3 && servRam >= 64 && phaseTwoDone == false) {
 			wThreads = 1
 			gThreads = 1
 			hThreads = 10
@@ -115,29 +116,48 @@ export async function main(ns) {
 			targetChange = true
 			phaseTwoDone = true
 		}
-		if (servCount >= 3 && servRam >= 512 && phaseThreeDone == false) {
+		if (servCount >= 3 && servRam >= 128 && phaseTwoDone == false) {
 			wThreads = 1
 			gThreads = 1
 			hThreads = 10
 			cycleDelay = 250
 			currentTarget = firstTarget
 			targetChange = true
-			phaseThreeDone = true
+			phaseTwoDone = true
 		}
-		if (servCount >= 3 && servRam >= 1024 && phaseFourDone == false) {
+
+		if (servCount >= 3 && servRam >= 256 && phaseTwoDone == false) {
+			wThreads = 1
+			gThreads = 1
+			hThreads = 10
+			cycleDelay = 100
+			currentTarget = firstTarget
+			targetChange = true
+			phaseTwoDone = true
+		}
+		if (servCount >= 3 && servRam >= 512 && phaseThreeDone == false) {
 			wThreads = 2
 			gThreads = 2
 			hThreads = 20
-			cycleDelay = 250
+			cycleDelay = 100
+			currentTarget = firstTarget
+			targetChange = true
+			phaseThreeDone = true
+		}
+		if (servCount >= 3 && servRam >= 1024 && phaseFourDone == false) {
+			wThreads = 4
+			gThreads = 4
+			hThreads = 40
+			cycleDelay = 100
 			currentTarget = firstTarget
 			targetChange = true
 			phaseFourDone = true
 		}
 		if (servCount >= 3 && servRam >= 2048 && phaseFourDone == false) {
-			wThreads = 4
-			gThreads = 4
-			hThreads = 40
-			cycleDelay = 250
+			wThreads = 8
+			gThreads = 8
+			hThreads = 80
+			cycleDelay = 100
 			currentTarget = firstTarget
 			targetChange = true
 			phaseFourDone = true

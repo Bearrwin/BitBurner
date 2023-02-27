@@ -290,27 +290,6 @@ export async function main(ns) {
 	ns.tprint("");
 
 
-	// goalFour
-
-	// This upgrdes your home RAM if it is less than 64Gb, using a subscript to do so to save on
-	// ongoing RAM cost of this script.
-	if (ns.getServerMaxRam("home") < 64) {
-
-		if (goalFour == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(goalFourMoney, "$0.000a")} `);
-			ns.tprint("");
-			while (ns.getServerMoneyAvailable("home") < goalFourMoney && goalFour == false) {
-				await ns.sleep(5000)
-			}
-			ns.run("/serv/serv.homeupg.auto.js")
-			ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
-			await ns.sleep(2000)
-		}
-	}
-	ns.write("/savedVar/newTarget.txt", "true", "w")
-	goalFour = true
-	ns.tprint("Goal Four is complete, your home ram is at least 64Gb, moving to goal Five");
-	ns.tprint("");
 
 	// goalFive
 	// This goal upgrades the purchased servers that were bought in goal 3, goals 6-9 are basically
@@ -381,6 +360,29 @@ export async function main(ns) {
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	goalSeven = true
 	ns.tprint("Goal Seven is complete, moving to goal Eight");
+	ns.tprint("");
+
+
+	// goalFour
+
+	// This upgrdes your home RAM if it is less than 64Gb, using a subscript to do so to save on
+	// ongoing RAM cost of this script.
+	if (ns.getServerMaxRam("home") < 64) {
+
+		if (goalFour == false) {
+			ns.tprint("Saving up until I have " + `${ns.nFormat(goalFourMoney, "$0.000a")} `);
+			ns.tprint("");
+			while (ns.getServerMoneyAvailable("home") < goalFourMoney && goalFour == false) {
+				await ns.sleep(5000)
+			}
+			ns.run("/serv/serv.homeupg.auto.js")
+			ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
+			await ns.sleep(2000)
+		}
+	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
+	goalFour = true
+	ns.tprint("Goal Four is complete, your home ram is at least 64Gb, moving to goal Five");
 	ns.tprint("");
 
 
