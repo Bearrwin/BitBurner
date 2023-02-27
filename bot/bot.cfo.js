@@ -87,7 +87,7 @@ export async function main(ns) {
 	let goalThree = false
 	let goalThreeServerSize = 64
 	let goalThreeServerName = "S"
-	let goalThreeMaxservPurchCount = 3
+	let goalThreeMaxservPurchCount = 5
 	let goalThreeMoney = ns.getPurchasedServerCost(goalThreeServerSize)
 	let goalFour = false
 	let goalFourMoney = 11000000
@@ -111,7 +111,7 @@ export async function main(ns) {
 	let goalTenServerName = goalThreeServerName
 	// if the next variable is less than 3, it will cause problems this is due to autonaming system
 	// for servers and how I am referring to them in these algorithms
-	let goalTenMaxservPurchCount = 7 + goalThreeMaxservPurchCount
+	let goalTenMaxservPurchCount = 10
 	let goalTenMoney = ns.getPurchasedServerCost(goalTenServerSize)
 	let goalEleven = false
 	let goalElevenMoney = 550000000

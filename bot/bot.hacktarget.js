@@ -14,10 +14,14 @@ export async function main(ns) {
 	var stageOne = ns.read("/savedVar/stageOne.txt") === "true" ? true : false;
 	var newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
 	var servCount = ns.read("/savedVar/purchServCount.txt")
-	let stageOnephaseTwoDone = false
-	let stageOnephaseThreeDone = false
-	let stageOnephaseFourDone = false
-	let stageOnephaseFiveDone = false
+	var phaseOneDone = false
+	var phaseTwoDone = false
+	var phaseThreeDone = false
+	var phaseFourDone = false
+	var phaseFiveDone = false
+	var phaseSixDone = false
+	var phaseSevenDone = false
+	var currentTarget = "n00dles"
 	let currentTargetOne = "n00dles"
 	let currentTargetTwo = "n00dles"
 	let currentTargetThree = "n00dles"
@@ -27,120 +31,117 @@ export async function main(ns) {
 	let fourthTarget = "silver-helix"
 	let fifthTarget = "omega-net"
 	let wgh = true
+	let wThreads = 1
+	let gThreads = 12
+	let hThreads = 1
+	let cycleDelay = 1000
+	let targetChange = false
+	let doubleBarrel = false
+	let doubleBarrelTarget = "n00dles"
+	var pidOne = 0
+	var pidTwo = 0
 
-
-
-	while (stageOne == true) {
-		stageOne = ns.read("/savedVar/stageOne.txt") === "true" ? true : false;
-		if (stageOne == true) {
-			if (ns.getServerMaxRam("S") > 1024) {
-				wgh = false
-			}
-
-			ns.run("/utils/isexists.purchServ.js")
-			await ns.sleep(1000)
-			servCount = ns.read("/savedVar/purchServCount.txt")
-			while (wgh == true) {
-				if (servCount > 0) {
-
-					if (ns.fileExists("BruteSSH.exe", "home") && (ns.getHackingLevel() > 150)) {
-						if (stageOnephaseTwoDone == false) {
-							currentTargetOne = secondTarget
-							currentTargetTwo = secondTarget
-							currentTargetThree = secondTarget
-							ns.print("First target set to " + secondTarget)
-							ns.print("Second target set to " + secondTarget)
-							ns.print("Third target set to " + secondTarget)
-							ns.print("")
-							stageOnephaseTwoDone = true
-						}
-					}
-					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(thirdTarget) && (ns.fileExists("FTPCrack.exe", "home") && ns.getServerMaxRam("S") > 128)) {
-						if (stageOnephaseThreeDone == false) {
-							currentTargetOne = thirdTarget
-							currentTargetTwo = thirdTarget
-							currentTargetThree = thirdTarget
-							ns.print("First target set to " + thirdTarget)
-							ns.print("Second target set to " + thirdTarget)
-							ns.print("Third target set to " + thirdTarget)
-							ns.print("")
-							stageOnephaseThreeDone = true
-						}
-					}
-					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fourthTarget) && ns.hasRootAccess(fourthTarget) && ns.getServerMaxRam("S") > 1024) {
-						if (stageOnephaseFourDone == false) {
-							currentTargetOne = thirdTarget
-							currentTargetTwo = fourthTarget
-							currentTargetThree = fourthTarget
-							ns.print("First target set to " + thirdTarget)
-							ns.print("Second target set to " + fourthTarget)
-							ns.print("Third target set to " + fourthTarget)
-							ns.print("")
-							stageOnephaseFourDone = true
-						}
-					}
-					if (ns.getHackingLevel() > ns.getServerRequiredHackingLevel(fifthTarget) && ns.hasRootAccess(fifthTarget) && servCount >= 8) {
-						if (stageOnephaseFiveDone == false) {
-							currentTargetOne = thirdTarget
-							currentTargetTwo = fourthTarget
-							currentTargetThree = fifthTarget
-							ns.print("First target set to " + thirdTarget)
-							ns.print("Second target set to " + fourthTarget)
-							ns.print("Third target set to " + fifthTarget)
-							ns.print("")
-							stageOnephaseFiveDone = true
-						}
-						newTarget = false
-					}
-					await ns.sleep(11)
-
-				}
-
-
-
-
-				//	run the worm to crawl the network and use any available crack 
-				//	programs and nuke.exe on any server with enough ports open.
-				ns.run("/worm/worm.nuke.js")
-				ns.tprint("Running Nuke worm to crack all possible ports and nuke all possible servers.")
-				ns.tprint("")
-				await ns.sleep(30000)
-				// 	run the worm that kills all scripts on all servers except home.
-				ns.run("/worm/worm.killall.excepthome.js")
-				ns.tprint("Killing old scripts everywhere but home")
-				ns.tprint("")
-				await ns.sleep(5000)
-				// run the worm that copies wgh script to npc servers and runs them at our current target.
-				// we always want these servers hitting n00dles their firepower is too low to bother
-				// with anything else
-				ns.run("/worm/worm.wgh.nocrack.loop.npconly.js", 1, firstTarget)
-				ns.tprint("Running combo wgh worm on all NPC servers to target " + firstTarget)
-				ns.tprint("")
-				await ns.sleep(30000)
-				// run the worm that copies wgh script to npc servers and runs them at our current target.
-				if (servCount > 0) {
-					ns.run("/worm/worm.wgh.nocrack.loop.pconly.3.js", 1, currentTargetOne, currentTargetTwo, currentTargetThree,)
-					ns.tprint("Running combo wgh worm on all PC servers (if we have any)")
-					ns.tprint("")
-				}
-
-				while (newTarget == false) {
-
-					newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
-					await ns.sleep(6000)
-
-
-				}
-				ns.tprint("We have a new targeting request")
-				ns.write("/savedVar/newTarget.txt", "false", "w")
-				await ns.sleep(1000)
-				newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
-			}
-		}
-		await ns.sleep(10)
+	if (ns.getServerMaxRam("S") >= 256) {
+		wgh = false
 	}
 
 
+	while (wgh == true) {
+		if (ns.getServerMaxRam("S") >= 256) {
+			wgh = false
+		}
+
+		ns.run("/utils/isexists.purchServ.js")
+		await ns.sleep(1000)
+		servCount = ns.read("/savedVar/purchServCount.txt")
+
+
+		//	run the worm to crawl the network and use any available crack 
+		//	programs and nuke.exe on any server with enough ports open.
+		ns.run("/worm/worm.nuke.js")
+		ns.tprint("Running Nuke worm to crack all possible ports and nuke all possible servers.")
+		ns.tprint("")
+		await ns.sleep(30000)
+		// 	run the worm that kills all scripts on all servers except home.
+		ns.run("/worm/worm.killall.excepthome.js")
+		ns.tprint("Killing old scripts everywhere but home")
+		ns.tprint("")
+		await ns.sleep(5000)
+		// run the worm that copies wgh script to npc servers and runs them at our current target.
+		// we always want these servers hitting n00dles their firepower is too low to bother
+		// with anything else
+		ns.run("/worm/worm.wgh.nocrack.loop.npconly.js", 1, firstTarget)
+		ns.tprint("Running combo wgh worm on all NPC servers to target " + firstTarget)
+		ns.tprint("")
+		await ns.sleep(30000)
+		// run the worm that copies wgh script to npc servers and runs them at our current target.
+		if (servCount > 0) {
+			ns.run("/worm/worm.wgh.nocrack.loop.pconly.js", 1, firstTarget)
+			ns.tprint("Running combo wgh worm on all PC servers (if we have any)")
+			ns.tprint("")
+		}
+
+		while (newTarget == false) {
+
+			newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
+			await ns.sleep(6000)
+
+
+		}
+		ns.tprint("We have a new targeting request")
+		ns.write("/savedVar/newTarget.txt", "false", "w")
+		await ns.sleep(1000)
+		newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
+
+	}
+	ns.run("/worm/worm.killall.excepthome.js")
+	ns.tprint("Killing old scripts everywhere but home")
+	ns.tprint("")
+	await ns.sleep(5000)
+
+
+	while (true) {
+		ns.run("/utils/isexists.purchServ.js")
+		await ns.sleep(1000)
+		servCount = ns.read("/savedVar/purchServCount.txt")
+		var servRam = ns.getServerMaxRam("S")
+
+		if (servCount >= 3 && servRam >= 256 && phaseTwoDone == false) {
+			wThreads = 1
+			gThreads = 1
+			hThreads = 10
+			cycleDelay = 500
+			currentTarget = firstTarget
+			targetChange = true
+			phaseTwoDone = true
+		}
+		if (servCount >= 3 && servRam >= 512 && phaseThreeDone == false) {
+			wThreads = 1
+			gThreads = 1
+			hThreads = 10
+			cycleDelay = 250
+			currentTarget = firstTarget
+			targetChange = true
+			phaseThreeDone = true
+		}
+		if (servCount >= 3 && servRam >= 1024 && phaseFourDone == false) {
+			wThreads = 2
+			gThreads = 2
+			hThreads = 20
+			cycleDelay = 250
+			currentTarget = firstTarget
+			targetChange = true
+			phaseFourDone = true
+		}
+		if (servCount >= 3 && servRam >= 2048 && phaseFourDone == false) {
+			wThreads = 4
+			gThreads = 4
+			hThreads = 40
+			cycleDelay = 250
+			currentTarget = firstTarget
+			targetChange = true
+			phaseFourDone = true
+		}
 
 
 
@@ -148,5 +149,47 @@ export async function main(ns) {
 
 
 
+
+
+
+
+
+
+		if (targetChange == true) {
+
+
+			ns.run("/serv/serv.propagate.all.js")
+			await ns.sleep(5000)
+			ns.tprint("PID to kill is " + pidOne)
+			ns.kill(pidOne)
+			var pidOne = ns.run("/init/init.batcher.pservPool.js", 1, currentTarget, wThreads, gThreads, hThreads, cycleDelay)
+			if (doubleBarrel == true) {
+				ns.tprint("PID2 to kill is " + pidTwo)
+				ns.kill(pidTwo)
+				var pidTwo = ns.run("/init/init.batcher.pservPool.js", 1, doubleBarrelTarget, wThreads, gThreads, hThreads, cycleDelay)
+
+			}
+		}
+		targetChange = false
+
+		ns.run("/worm/worm.nuke.js")
+		ns.tprint("Running Nuke worm to crack all possible ports and nuke all possible servers.")
+		ns.tprint("")
+		await ns.sleep(1000)
+
+		while (newTarget == false) {
+
+			newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
+			await ns.sleep(6000)
+
+
+		}
+		ns.tprint("We have a new targeting request")
+		ns.write("/savedVar/newTarget.txt", "false", "w")
+		await ns.sleep(1000)
+		newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
+
+		await ns.sleep(10)
+	}
 
 }
