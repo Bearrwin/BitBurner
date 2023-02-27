@@ -6,7 +6,7 @@ export async function main(ns) {
 let servers = ns.getPurchasedServers();
 
 // open the log window
-ns.tail()
+// ns.tail()
 
 // for every entry in the variable servers, run the below script which copies all scripts from home
 // to the target server.
