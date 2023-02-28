@@ -41,15 +41,15 @@ export async function main(ns) {
 	var pidOne = 0
 	var pidTwo = 0
 
-	if (servCount > 0) {
-		if (ns.getServerMaxRam("S") >= 256) {
+	if (servCount >= 3) {
+		if (ns.getServerMaxRam("S") >= 64) {
 			wgh = false
 		}
 	}
 
 	while (wgh == true) {
-		if (servCount > 0) {
-			if (ns.getServerMaxRam("S") >= 256) {
+		if (servCount >= 3) {
+			if (ns.getServerMaxRam("S") >= 64) {
 				wgh = false
 			}
 		}
@@ -110,7 +110,7 @@ export async function main(ns) {
 		if (servCount >= 3 && servRam >= 64 && phaseTwoDone == false) {
 			wThreads = 1
 			gThreads = 1
-			hThreads = 10
+			hThreads = 5
 			cycleDelay = 500
 			currentTarget = firstTarget
 			targetChange = true
@@ -136,33 +136,41 @@ export async function main(ns) {
 			phaseTwoDone = true
 		}
 		if (servCount >= 3 && servRam >= 512 && phaseThreeDone == false) {
-			wThreads = 2
-			gThreads = 2
-			hThreads = 20
-			cycleDelay = 100
-			currentTarget = firstTarget
+			wThreads = 1
+			gThreads = 12
+			hThreads = 1
+			cycleDelay = 250
+			currentTarget = secondTarget
 			targetChange = true
 			phaseThreeDone = true
 		}
 		if (servCount >= 3 && servRam >= 1024 && phaseFourDone == false) {
-			wThreads = 4
-			gThreads = 4
-			hThreads = 40
-			cycleDelay = 100
-			currentTarget = firstTarget
+			wThreads = 2
+			gThreads = 24
+			hThreads = 2
+			cycleDelay = 250
+			currentTarget = thirdTarget
 			targetChange = true
 			phaseFourDone = true
 		}
-		if (servCount >= 3 && servRam >= 2048 && phaseFourDone == false) {
-			wThreads = 8
-			gThreads = 8
-			hThreads = 80
+		if (servCount >= 3 && servRam >= 2048 && phaseFiveDone == false) {
+			wThreads = 2
+			gThreads = 24
+			hThreads = 2
 			cycleDelay = 100
-			currentTarget = firstTarget
+			currentTarget = thirdTarget
 			targetChange = true
-			phaseFourDone = true
+			phaseFiveDone = true
 		}
-
+		if (servCount >= 3 && servRam >= 4096 && phaseSixDone == false) {
+			wThreads = 2
+			gThreads = 24
+			hThreads = 2
+			cycleDelay = 50
+			currentTarget = thirdTarget
+			targetChange = true
+			phaseSixDone = true
+		}
 
 
 
@@ -197,10 +205,16 @@ export async function main(ns) {
 		ns.tprint("")
 		await ns.sleep(1000)
 
+		let timeOut = 100
 		while (newTarget == false) {
 
 			newTarget = ns.read("/savedVar/newTarget.txt") === "true" ? true : false;
 			await ns.sleep(6000)
+			timeOut--
+			ns.print(timeOut)
+			if (timeOut < 1) {
+				newTarget = true
+			}
 
 
 		}

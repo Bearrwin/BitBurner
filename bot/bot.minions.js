@@ -27,13 +27,13 @@ export async function main(ns) {
 	if (stageOne == true) {
 		// start doing algorithms course at rothman uni via a sebscript to save on 
 		// continual RAM usage
-		if (ns.getHackingLevel() < 100) {
+		if (ns.getHackingLevel() < 200) {
 			ns.run("/work/uni.rothman.hack.js")
 			ns.tprint("Starting Algorithms course at Rothman-uni")
 		}
 
 		// wait until we are at hacking level 100 then start working, auto-cancels uni.
-		while (ns.getHackingLevel() < 100) {
+		while (ns.getHackingLevel() < 200) {
 			await ns.sleep(1000)
 		}
 		// ns.write("/savedVar/newTarget.txt", "true", "w")
