@@ -38,8 +38,8 @@ export async function main(ns) {
 	let torPurch = false
 	const torMoney = 300000
 	let initialServPurch = false
-	const initialServPurchSize = 64
-	const initialServPurchCount = 3
+	const initialServPurchSize = 128
+	const initialServPurchCount = 5
 	const initialServPurchMoney = ns.getPurchasedServerCost(initialServPurchSize)
 	let ftpPurch = false
 	const ftpPurchMoney = 1600000
@@ -65,22 +65,31 @@ export async function main(ns) {
 	const fifthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(fifthServUpgServerSize) - ns.getPurchasedServerCost(fourthServUpgServerSize)) * initialServPurchCount)
 	let sixthServUpg = false
 	const sixthServUpgServerSize = fifthServUpgServerSize * 2
-	const sixthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(sixthServUpgServerSize) - ns.getPurchasedServerCost(fifthServUpgServerSize)))
+	const sixthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(sixthServUpgServerSize) - ns.getPurchasedServerCost(fifthServUpgServerSize)) * initialServPurchCount)
+	let seventhServUpg = false
+	const seventhServUpgServerSize = sixthServUpgServerSize * 2
+	const seventhServUpgMoney = Math.ceil((ns.getPurchasedServerCost(seventhServUpgServerSize) - ns.getPurchasedServerCost(sixthServUpgServerSize)) * initialServPurchCount)
+	let eighthServUpg = false
+	const eighthServUpgServerSize = seventhServUpgServerSize * 2
+	const eighthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(eighthServUpgServerSize) - ns.getPurchasedServerCost(seventhServUpgServerSize)) * initialServPurchCount)
 	let secondServPurch = false
-	const secondServPurchCount = 10
-	const secondServPurchSize = 4096
+	const secondServPurchCount = 15
+	const secondServPurchSize = eighthServUpgServerSize
 	const secondServPurchMoney = ns.getPurchasedServerCost(secondServPurchSize)
+	let bitrunnerDonation = false
+	const bitrunnerDonationMoney = 770000000000
 	let homeRamUpgStageTwo = false
-	const homeRamUpgStageTwoSize = 4096
-	const homeRamUpgStageTwoMoney = 15000000000
+	const homeRamUpgStageTwoSize = 16384
+	const homeRamUpgStageTwoMoney = 135000000000
 	let augPurchStageTwo = false
-	const augPurchStageTwoMoney = 58000000000
+	const augPurchStageTwoMoney = 350000000000
 
 
 
 	if (ns.hasTorRouter()) {
 		torPurch = true
 	}
+
 	if (purchServCount >= initialServPurchCount) {
 		initialServPurch = true
 	}
@@ -106,12 +115,18 @@ export async function main(ns) {
 		if (ns.getServerMaxRam(purchServerName) >= sixthServUpgServerSize) {
 			sixthServUpg = true
 		}
-		if (ns.getServerMaxRam(purchServerName) >= secondServPurchSize) {
+		if (ns.getServerMaxRam(purchServerName) >= seventhServUpgServerSize) {
+			seventhServUpg = true
+		}
+		if (ns.getServerMaxRam(purchServerName) >= eighthServUpgServerSize) {
+			eighthServUpg = true
+		}
+		if (purchServCount >= secondServPurchCount) {
 			secondServPurch = true
 		}
 	}
 
-	if (ns.getServerMaxRam("home") >= 8192) {
+	if (ns.getServerMaxRam("home") >= 16384) {
 		homeRamUpgStageTwo = true
 	}
 
@@ -122,18 +137,35 @@ export async function main(ns) {
 	// torPurch
 	if (!ns.hasTorRouter()) {
 		if (torPurch == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(torMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(torMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < torMoney && torPurch == false) {
 				await ns.sleep(5000)
 			}
-			ns.run("/utils/darkweb.auto.torPurch.js")
+			ns.run("/utils/darkweb.auto.goalOne.js")
 			ns.tprint("Buying a Tor router from the darkweb.")
-		} else if (bruteBought == true) {
+		} else if (torPurch == true) {
 			ns.tprint("You already own a TOR Router")
 		}
 	}
 	ns.write("/savedVar/newTarget.txt", "true", "w")
+
+	// ftpPurch
+	if (ftpBought == false) {
+		if (ftpPurch == false) {
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(ftpPurchMoney)} `);
+			ns.tprint("");
+			while (ns.getServerMoneyAvailable("home") < ftpPurchMoney && ftpPurch == false) {
+				await ns.sleep(5000)
+			}
+			ns.run("/utils/darkweb.auto.goalTwo.js")
+			ns.tprint("Buying FTPCrack.exe from the darkweb.")
+		} else if (ftpBought == true) {
+			ns.tprint("You already own FTPCrack.exe")
+		}
+	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
+	ftpPurch = true
 
 
 	// initialServPurch
@@ -143,7 +175,7 @@ export async function main(ns) {
 	}
 	if (initialServPurch == false) {
 		while (purchServCount < initialServPurchCount) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(initialServPurchMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(initialServPurchMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < initialServPurchMoney && initialServPurch == false) {
 				await ns.sleep(5000)
@@ -159,28 +191,12 @@ export async function main(ns) {
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	initialServPurch = true
 
-	// ftpPurch
-	if (ftpBought == false) {
-		if (ftpPurch == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(ftpPurchMoney, "$0.000a")} `);
-			ns.tprint("");
-			while (ns.getServerMoneyAvailable("home") < ftpPurchMoney && ftpPurch == false) {
-				await ns.sleep(5000)
-			}
-			ns.run("/utils/darkweb.auto.goalTwo.js")
-			ns.tprint("Buying FTPCrack.exe from the darkweb.")
-		} else if (ftpBought == true) {
-			ns.tprint("You already own FTPCrack.exe")
-		}
-	}
-	ns.write("/savedVar/newTarget.txt", "true", "w")
-	ftpPurch = true
-
+	
 	// firstServUpg
 	if (ns.getServerMaxRam(purchServerName) < firstServUpgServerSize) {
 
 		if (firstServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(firstServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(firstServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < firstServUpgMoney && firstServUpg == false) {
 				await ns.sleep(5000)
@@ -200,7 +216,7 @@ export async function main(ns) {
 	if (ns.getServerMaxRam(purchServerName) < secondServUpgServerSize) {
 
 		if (secondServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(secondServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(secondServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < secondServUpgMoney && secondServUpg == false) {
 				await ns.sleep(5000)
@@ -218,7 +234,7 @@ export async function main(ns) {
 	if (ns.getServerMaxRam(purchServerName) < thirdServUpgServerSize) {
 
 		if (thirdServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(thirdServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(thirdServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < thirdServUpgMoney && thirdServUpg == false) {
 				await ns.sleep(5000)
@@ -237,7 +253,7 @@ export async function main(ns) {
 	if (ns.getServerMaxRam(purchServerName) < fourthServUpgServerSize) {
 
 		if (fourthServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(fourthServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(fourthServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < fourthServUpgMoney && fourthServUpg == false) {
 				await ns.sleep(5000)
@@ -256,7 +272,7 @@ export async function main(ns) {
 	if (ns.getServerMaxRam(purchServerName) < fifthServUpgServerSize) {
 
 		if (fifthServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(fifthServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(fifthServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < fifthServUpgMoney && fifthServUpg == false) {
 				await ns.sleep(5000)
@@ -273,7 +289,7 @@ export async function main(ns) {
 	// darkwebStageThree
 	if (!ns.fileExists("SQLInject.exe", "home")) {
 		if (darkwebStageThree == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(darkwebStageThreeMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(darkwebStageThreeMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < darkwebStageThreeMoney && darkwebStageThree == false) {
 				await ns.sleep(5000)
@@ -290,7 +306,7 @@ export async function main(ns) {
 	if (ns.getServerMaxRam(purchServerName) < sixthServUpgServerSize) {
 
 		if (sixthServUpg == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(sixthServUpgMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(sixthServUpgMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < sixthServUpgMoney && sixthServUpg == false) {
 				await ns.sleep(5000)
@@ -303,6 +319,44 @@ export async function main(ns) {
 	}
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	sixthServUpg = true
+
+
+	// seventhServUpg
+	if (ns.getServerMaxRam(purchServerName) < seventhServUpgServerSize) {
+
+		if (seventhServUpg == false) {
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(seventhServUpgMoney)} `);
+			ns.tprint("");
+			while (ns.getServerMoneyAvailable("home") < seventhServUpgMoney && seventhServUpg == false) {
+				await ns.sleep(5000)
+			}
+			ns.run("/serv/serv.purchasedupg.auto.js", 1, seventhServUpgServerSize)
+			await ns.sleep(5000)
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam(purchServerName));
+			await ns.sleep(5000)
+		}
+	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
+	seventhServUpg = true
+
+
+	// eighthServUpg
+	if (ns.getServerMaxRam(purchServerName) < eighthServUpgServerSize) {
+
+		if (eighthServUpg == false) {
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(eighthServUpgMoney)} `);
+			ns.tprint("");
+			while (ns.getServerMoneyAvailable("home") < eighthServUpgMoney && eighthServUpg == false) {
+				await ns.sleep(5000)
+			}
+			ns.run("/serv/serv.purchasedupg.auto.js", 1, eighthServUpgServerSize)
+			await ns.sleep(5000)
+			ns.tprint("Upgrading RAM on our purchased servers it is now.. " + ns.getServerMaxRam(purchServerName));
+			await ns.sleep(5000)
+		}
+	}
+	ns.write("/savedVar/newTarget.txt", "true", "w")
+	eighthServUpg = true
 
 
 
@@ -318,7 +372,7 @@ export async function main(ns) {
 	if (secondServPurch == false) {
 		while (purchServCount < secondServPurchCount) {
 			ns.tprint("We have " + purchServCount + " / " + secondServPurchCount);
-			ns.tprint("Saving up until I have " + `${ns.nFormat(secondServPurchMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(secondServPurchMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < secondServPurchMoney && secondServPurch == false) {
 				await ns.sleep(5000)
@@ -332,15 +386,15 @@ export async function main(ns) {
 
 		}
 	}
+	await ns.sleep(5000)
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	secondServPurch = true
-
 
 	// homeRamUpgStageTwo
 	if (ns.getServerMaxRam("home") < homeRamUpgStageTwoSize) {
 
 		if (homeRamUpgStageTwo == false) {
-			ns.tprint("Saving up until I have " + `${ns.nFormat(homeRamUpgStageTwoMoney, "$0.000a")} `);
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(homeRamUpgStageTwoMoney)} `);
 			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < homeRamUpgStageTwoMoney && homeRamUpgStageTwo == false) {
 				await ns.sleep(5000)
@@ -358,70 +412,97 @@ export async function main(ns) {
 
 		}
 	}
+	ns.run("/utils/darkweb.auto.js")
 	ns.write("/savedVar/newTarget.txt", "true", "w")
 	homeRamUpgStageTwo = true
+	await ns.sleep(5000)
 
 
-	var tianDiHuiDone = ns.read("/savedVar/tianDiHuiDone.txt") === "true" ? true : false;
-	var niteSecDone = ns.read("/savedVar/niteSecDone.txt") === "true" ? true : false;
+	// daedalusDonation
+	// if (daedalusDonation == false) {
+	// ns.tprint("Saving up until I have " + `${ns.formatNumber(daedalusDonationnMoney)} `);
+	// ns.tprint("");
+	// while (ns.getServerMoneyAvailable("home") < daedalusDonationMoney && daedalusDonationn == false) {
+	// 	await ns.sleep(5000)
+	// }
+	// ns.run("/donate/donate.daedalus.js", 1, 760000000000)
+	// ns.write("/savedVar/daedalusDone.txt", "true", "w")
+	// await ns.sleep(5000)
+	// ns.tprint("Donating money to Daedalus");
+	// }
+
+
+
+
 	var bitrunnersDone = ns.read("/savedVar/bitrunnersDone.txt") === "true" ? true : false;
-	var blackhandDone = ns.read("/savedVar/blackhandDone.txt") === "true" ? true : false;
+
+	if (bitrunnersDone == false) {
+		ns.tprint("Waiting on Bitrunners rep to purchase augments")
+		while (bitrunnersDone == false) {
+			bitrunnersDone = ns.read("/savedVar/bitrunnersDone.txt") === "true" ? true : false;
+			await ns.sleep(30000)
+		}
+	}
+
+
 
 	// augPurchStageTwo
-	if (augPurchStageTwo == false && blackhandDone == true && bitrunnersDone == true && niteSecDone == true && tianDiHuiDone == true) {
-		ns.tprint("Saving up until I have " + `${ns.nFormat(augPurchStageTwoMoney, "$0.000a")} `);
+	if (augPurchStageTwo == false && bitrunnersDone == true) {
+		ns.tprint("Saving up until I have " + `${ns.formatNumber(augPurchStageTwoMoney)} `);
 		ns.tprint("");
 		while (ns.getServerMoneyAvailable("home") < augPurchStageTwoMoney && augPurchStageTwo == false) {
 			await ns.sleep(5000)
 		}
 
-		ns.tprint("Buying augments if we don't already have them.")
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "Neuralstimulator")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Enhanced Myelin Sheathing")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "The Black Hand")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Cranial Signal Processors - Gen III")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "CRTX42-AA Gene Modification")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "Social Negotiation Assistant (S.N.A)")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "ADR-V1 Pheromone Gene")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
-		ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "NeuroFlux Governor")
-		await ns.sleep(5000)
+		if (augPurchStageTwo == false && bitrunnersDone == true) {
+			ns.tprint("Buying augments if we don't already have them.")
+			ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "Neuralstimulator")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Artificial Bio-neural Network Implant")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Embedded Netburner Module Core Implant")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Cranial Signal Processors - Gen IV")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Cranial Signal Processors - Gen V")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Neural Accelerator")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Enhanced Myelin Sheathing")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "The Black Hand", "The Black Hand")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "Chongqing", "Neuregen Gene Modification")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "Social Negotiation Assistant (S.N.A)")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "Tian Di Hui", "ADR-V1 Pheromone Gene")
+			await ns.sleep(2000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
+			await ns.sleep(5000)
+			ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
+			await ns.sleep(5000)
 
-		// 	ns.tprint("Faction check met")
-		// } else {
+			ns.tprint("Faction check met")
+		} else {
 
-		// 	ns.tprint("Faction check not met")
-		// }
+			ns.tprint("Faction check not met")
+		}
+		await ns.sleep(60000)
+		augPurchStageTwo = true
+		ns.tprint("Goal Twelve is complete, time to install augments");
+		ns.tprint("");
+		ns.write("/savedVar/stageTwoDone.txt", "true", "w")
+
 
 
 	}
-
-	augPurchStageTwo = true
-	ns.tprint("Goal Twelve is complete, time to install augments");
-	ns.tprint("");
-	ns.write("/savedVar/StageOnePhaseOneComplete.txt", "true", "w")
-
-
 
 
 

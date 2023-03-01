@@ -430,19 +430,8 @@ export async function main(ns) {
 		}
 
 		ns.tprint("Buying augments if we don't already have them.")
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Artificial Bio-neural Network Implant")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Embedded Netburner Module Core Implant")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Cranial Signal Processors - Gen IV")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Cranial Signal Processors - Gen V")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "Neural Accelerator")
-		await ns.sleep(2000)
+
 		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "DataJack")
-		await ns.sleep(2000)
-		ns.run("/utils/faction.buy.augment.js", 1, "Chongqing", "Neuregen Gene Modification")
 		await ns.sleep(2000)
 		ns.run("/utils/faction.buy.augment.js", 1, "BitRunners", "NeuroFlux Governor")
 		await ns.sleep(5000)

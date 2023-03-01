@@ -36,20 +36,22 @@ export async function main(ns) {
 	var tianDiHuiDone = false
 	var blackhandDone = false
 	var bitrunnersDone = false
+	var chongqingDone = false
 	var invites = ns.singularity.checkFactionInvitations()
 	var currentWork = ns.singularity.getCurrentWork()
+	var currentCity = ns.getPlayer().city
 	ns.tprint(playerFaction)
 	ns.print(playerFaction)
 
 	await ns.sleep(15000)
 
-	if (ns.getHackingLevel() < 60) {
+	if (ns.getHackingLevel() < 100) {
 		ns.run("/work/uni.rothman.hack.js")
 		ns.tprint("Starting Algorithms course at Rothman-uni")
 	}
 
 
-	while (ns.getHackingLevel() < 60) {
+	while (ns.getHackingLevel() < 100) {
 		await ns.sleep(1000)
 	}
 
@@ -65,45 +67,44 @@ export async function main(ns) {
 		playerFaction = ns.getPlayer().factions
 		invites = ns.singularity.checkFactionInvitations()
 		await ns.sleep(1000)
-		for (invite of invites) {
+		for (let invite of invites) {
 			// && invite != "Chongqing" && invite != "New Tokyo" && invite != "Ishima"
 			if (invite != "Sector-12" && invite != "Aevum" && invite != "Volhaven")
 				ns.singularity.joinFaction(invite)
 		}
-		await ns.sleep(1000)
-		if (!playerFaction.includes("Tian Di Hui") || !playerFaction.includes("New Tokyo")) {
+		await ns.sleep(2000)
+		if (!playerFaction.includes("Tian Di Hui") || !playerFaction.includes("New Tokyo") && currentCity != "New Tokyo") {
 			ns.singularity.travelToCity("New Tokyo")
 		}
-		if (!playerFaction.includes("Chongqing") && playerFaction.includes("New Tokyo") && (playerFaction.includes("Tian Di Hui"))) {
+		if (!playerFaction.includes("Chongqing") && playerFaction.includes("New Tokyo") && (playerFaction.includes("Tian Di Hui") && currentCity != "Chongqing")) {
 			ns.singularity.travelToCity("Chongqing")
 		}
-		if (!playerFaction.includes("Ishima") && playerFaction.includes("Chongqing")) {
+	if (!playerFaction.includes("Ishima") && playerFaction.includes("Chongqing") && currentCity != "Ishima") {
 			ns.singularity.travelToCity("Ishima")
 		}
-		if (playerFaction.includes("Ishima")) {
+		if (playerFaction.includes("Ishima") && currentCity != "Sector-12") {
 			ns.singularity.travelToCity("Sector-12")
 		}
-
 		// -----------------------------
 
 		if (playerFaction.includes("CyberSec") && csecDone == false && !Object.values(currentWork).includes("CyberSec")) {
 			ns.singularity.workForFaction("CyberSec", "Hacking")
 		}
 		await ns.sleep(1000)
-		if (playerFaction.includes("NiteSec") && niteSecDone == false && !Object.values(currentWork).includes("NiteSec")) {
+		if (playerFaction.includes("Tian Di Hui") && tianDiHuiDone == false && !Object.values(currentWork).includes("Tian Di Hui")) {
 			csecDone = true
-			ns.singularity.workForFaction("NiteSec", "Hacking")
-		}
-		await ns.sleep(1000)
-		if (playerFaction.includes("Tian Di Hui") && tianDiHuiDone == false && ns.singularity.getFactionRep("NiteSec") > 45000 && !Object.values(currentWork).includes("Tian Di Hui")) {
-			niteSecDone = true
-			ns.write("/savedVar/niteSecDone.txt", "true", "w")
 			ns.singularity.workForFaction("Tian Di Hui", "Hacking")
 		}
 		await ns.sleep(1000)
-		if (playerFaction.includes("The Black Hand") && blackhandDone == false && ns.singularity.getFactionRep("Tian Di Hui") > 7000 && !Object.values(currentWork).includes("The Black Hand")) {
+		if (playerFaction.includes("Chongqing") && chongqingDone == false && ns.singularity.getFactionRep("Tian Di Hui") > 75000 && !Object.values(currentWork).includes("Chongqing")) {
 			tianDiHuiDone = true
 			ns.write("/savedVar/tianDiHuiDone.txt", "true", "w")
+			ns.singularity.workForFaction("Chongqing", "Hacking")
+		}
+		await ns.sleep(1000)
+		if (playerFaction.includes("The Black Hand") && blackhandDone == false && ns.singularity.getFactionRep("Chongqing") > 38000 && !Object.values(currentWork).includes("The Black Hand")) {
+			chongqingDone = true
+			ns.write("/savedVar/chongqingDone.txt", "true", "w")
 			ns.singularity.workForFaction("The Black Hand", "Hacking")
 		}
 		await ns.sleep(1000)
@@ -113,7 +114,7 @@ export async function main(ns) {
 			ns.singularity.workForFaction("BitRunners", "Hacking")
 		}
 
-		if (ns.singularity.getFactionRep("BitRunners") >= 100000) {
+		if (ns.singularity.getFactionRep("BitRunners") >= 280000) {
 			bitrunnersDone = true
 			ns.write("/savedVar/bitrunnersDone.txt", "true", "w")
 		}

@@ -37,6 +37,9 @@ export async function main(ns) {
 
 	let torPurch = false
 	const torMoney = 800000
+	let homeRamUpgStageOne = false
+	const homeRamUpgStageOneSize = 64
+	const homeRamUpgStageOneMoney = 11000000
 	let initialServPurch = false
 	const initialServPurchSize = 64
 	const initialServPurchCount = 5
@@ -74,13 +77,13 @@ export async function main(ns) {
 	const eighthServUpgMoney = Math.ceil((ns.getPurchasedServerCost(eighthServUpgServerSize) - ns.getPurchasedServerCost(seventhServUpgServerSize)) * initialServPurchCount)
 	let secondServPurch = false
 	const secondServPurchCount = 10
-	const secondServPurchSize = eighthServUpgServerSize
+	const secondServPurchSize = sixthServUpgServerSize
 	const secondServPurchMoney = ns.getPurchasedServerCost(secondServPurchSize)
 	let bitrunnerDonation = false
 	const bitrunnerDonationMoney = 770000000000
 	let homeRamUpgStageTwo = false
-	const homeRamUpgStageTwoSize = 2048
-	const homeRamUpgStageTwoMoney = 4650000000
+	const homeRamUpgStageTwoSize = 4096
+	const homeRamUpgStageTwoMoney = 16000000000
 	let augPurchStageTwo = false
 	const augPurchStageTwoMoney = 60000000000
 
@@ -89,6 +92,10 @@ export async function main(ns) {
 	if (ns.hasTorRouter()) {
 		torPurch = true
 	}
+	if (ns.getServerMaxRam("home") >= 64) {
+		homeRamUpgStageOne = true
+	}
+
 	if (purchServCount >= initialServPurchCount) {
 		initialServPurch = true
 	}
@@ -125,7 +132,7 @@ export async function main(ns) {
 		}
 	}
 
-	if (ns.getServerMaxRam("home") >= 2048) {
+	if (ns.getServerMaxRam("home") >= 4096) {
 		homeRamUpgStageTwo = true
 	}
 
@@ -137,7 +144,7 @@ export async function main(ns) {
 	if (!ns.hasTorRouter()) {
 		if (torPurch == false) {
 			ns.tprint("Saving up until I have " + `${ns.formatNumber(torMoney)} `);
-						ns.tprint("");
+			ns.tprint("");
 			while (ns.getServerMoneyAvailable("home") < torMoney && torPurch == false) {
 				await ns.sleep(5000)
 			}
@@ -148,6 +155,29 @@ export async function main(ns) {
 		}
 	}
 	ns.write("/savedVar/newTarget.txt", "true", "w")
+
+	// homeRamUpgStageOne
+	if (ns.getServerMaxRam("home") < homeRamUpgStageOneSize) {
+
+		if (homeRamUpgStageOne == false) {
+			ns.tprint("Saving up until I have " + `${ns.formatNumber(homeRamUpgStageOneMoney)} `);
+			ns.tprint("");
+			while (ns.getServerMoneyAvailable("home") < homeRamUpgStageOneMoney && homeRamUpgStageOne == false) {
+				await ns.sleep(5000)
+			}
+			ns.run("/serv/serv.homeupg.auto.js")
+			await ns.sleep(5000)
+			ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
+
+			while (ns.getServerMaxRam("home") < homeRamUpgStageOneSize) {
+				ns.run("/serv/serv.homeupg.auto.js")
+				await ns.sleep(5000)
+				ns.tprint("Upgrading RAM on our home server it is now.. " + ns.getServerMaxRam("home"));
+
+			}
+
+		}
+	}
 
 
 	// initialServPurch
@@ -465,7 +495,7 @@ export async function main(ns) {
 
 
 
-		if (ns.singularity.getFactionRep("CyberSec") > 2000 && ns.singularity.getFactionRep("Sector-12") > 12500 && ns.singularity.getFactionRep("NiteSec") > 20000) {
+		if (ns.singularity.getFactionRep("CyberSec") > 2000 && ns.singularity.getFactionRep("Sector-12") > 12500 && ns.singularity.getFactionRep("NiteSec") > 50000) {
 			ns.tprint("Buying augments if we don't already have them.")
 			ns.run("/utils/faction.buy.augment.js", 1, "NiteSec", "Cranial Signal Processors - Gen I")
 			await ns.sleep(2000)

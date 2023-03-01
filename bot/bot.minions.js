@@ -27,19 +27,20 @@ export async function main(ns) {
 	if (stageOne == true) {
 		// start doing algorithms course at rothman uni via a sebscript to save on 
 		// continual RAM usage
-		if (ns.getHackingLevel() < 200) {
+		if (ns.getHackingLevel() < 100) {
 			ns.run("/work/uni.rothman.hack.js")
 			ns.tprint("Starting Algorithms course at Rothman-uni")
 		}
 
 		// wait until we are at hacking level 100 then start working, auto-cancels uni.
-		while (ns.getHackingLevel() < 200) {
+		while (ns.getHackingLevel() < 100) {
 			await ns.sleep(1000)
 		}
 		// ns.write("/savedVar/newTarget.txt", "true", "w")
 		// Work at Alpha Enterprises until CyberSec faction is available which will auto cancel this.
+		ns.write("/savedVar/newTarget.txt", "true", "w")
 		ns.run("/work/company.alpha-ent.js")
-		await ns.sleep(5000)
+		await ns.sleep(1000)
 
 		// If we don't belong to CyberSec, then while we don't have an invitation wait,
 		// when we do have an invitation run script to accept invite and work for them
@@ -60,8 +61,9 @@ export async function main(ns) {
 				if (!invite.includes("CyberSec")) {
 					ns.tprint("Waiting for an invitation to CyberSec")
 					while (!invite.includes("CyberSec")) {
+						ns.run("/worm/worm.nuke.js")
+						await ns.sleep(10000)
 						invite = ns.singularity.checkFactionInvitations()
-						await ns.sleep(5000)
 					}
 					// run the script that accepts the invitation and starts work for this faction.
 
@@ -119,7 +121,7 @@ export async function main(ns) {
 				}
 			}
 			ns.run("/work/faction.NiteSec.js")
-			while (ns.singularity.getFactionRep("NiteSec") < 20000) {
+			while (ns.singularity.getFactionRep("NiteSec") < 50000) {
 				await ns.sleep(5000)
 			}
 			niteSecDone = true

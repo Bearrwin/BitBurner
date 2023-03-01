@@ -172,24 +172,17 @@ export async function main(ns) {
 			phaseSixDone = true
 		}
 
-
-
-
-
-
-
-
-
-
-
-
 		if (targetChange == true) {
-
-
+		
+			ns.run("/worm/worm.nuke.js")
+			ns.tprint("Running Nuke worm to crack all possible ports and nuke all possible servers.")
+			ns.tprint("")
+			
 			ns.run("/serv/serv.propagate.all.js")
 			await ns.sleep(5000)
 			ns.tprint("PID to kill is " + pidOne)
 			ns.kill(pidOne)
+			await ns.sleep(10000)
 			var pidOne = ns.run("/init/init.batcher.pservPool.js", 1, currentTarget, wThreads, gThreads, hThreads, cycleDelay)
 			if (doubleBarrel == true) {
 				ns.tprint("PID2 to kill is " + pidTwo)
