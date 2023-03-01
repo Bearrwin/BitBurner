@@ -3,7 +3,6 @@ export async function main(ns) {
 ns.write("/savedVar/bitrunnersDone.txt", "false", "w")
 ns.write("/savedVar/blackhandDone.txt", "false", "w")
 ns.write("/savedVar/chongqingDone.txt", "false", "w")
-ns.write("/savedVar/chonqingDone.txt", "false", "w")
 ns.write("/savedVar/csecDone.txt", "false", "w")
 ns.write("/savedVar/daedalusDone.txt", "false", "w")
 ns.write("/savedVar/newTarget.txt", "false", "w")

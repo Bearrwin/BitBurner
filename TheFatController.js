@@ -3,9 +3,9 @@ export async function main(ns) {
 
 	var stageOneDone = false
 
-	ns.write("/savedVar/stageOneDone.txt", "true", "w")
+	ns.write("/savedVar/stageOneDone.txt", "false", "w")
 
-	ns.disableLog("sleep")
+	// ns.disableLog("sleep")
 	// Start the budget manager bot
 	ns.run("/bot/bot.cfo.js")
 	ns.tprint("I made you the CFO now get to work!")
@@ -34,11 +34,11 @@ export async function main(ns) {
 	}
 	ns.tprint("Sleep now!")
 	await ns.sleep(2000)
-	// if (stageOneDone == true) {
+	if (stageOneDone == true) {
 
-	// 	ns.singularity.installAugmentations("TheFatController.StageTwo.js")
+		ns.singularity.installAugmentations("TheFatController.StageTwo.js")
 
-	// }
+	}
 
 
 
